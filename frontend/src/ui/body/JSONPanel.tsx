@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect} from "react";
-import type {ExpandedPAGASADocument} from "pagasa-parser-web/build/backend/cache/BulletinListCache";
 import FormCheckInput from "react-bootstrap/FormCheckInput";
 import {Button, FormCheck} from "react-bootstrap";
 import FormCheckLabel from "react-bootstrap/FormCheckLabel";
 import Highlight from "react-highlight";
 import {Clipboard} from "react-bootstrap-icons";
+import type { ExpandedPAGASADocument } from "pagasa-parser-web/src/cache/BulletinListCache";
 
 function checkHas(activeBulletin, callback) : void {
     fetch(`/api/v1/bulletin/has/${encodeURIComponent(activeBulletin.file)}`)
