@@ -19,6 +19,8 @@ import {FormatWikipediaEndpoint} from "./api/v1/FormatWikipediaEndpoint";
 
 const packageInfo = require("../package.json");
 
+export { ExpandedPAGASADocument } from "./cache/BulletinListCache";
+
 export class PagasaParserWeb {
 
     static log : Logger;

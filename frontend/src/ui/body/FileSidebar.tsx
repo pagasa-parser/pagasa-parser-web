@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import "../../css/sidebar.css";
 import {Button, ListGroup, ListGroupItem} from "react-bootstrap";
 import {ArrowClockwise, FileEarmarkText} from "react-bootstrap-icons";
-import {ExpandedPAGASADocument} from "pagasa-parser-web/src/cache/BulletinListCache";
+import { ExpandedPAGASADocument } from "../../ExpandedPAGASADocument";
 
 export function FileList({ bulletins, bulletinState } : {
     bulletins: ExpandedPAGASADocument[],
