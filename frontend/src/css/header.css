@@ -1,0 +1,15 @@
+header {
+    z-index: 100;
+}
+
+.bg-theme {
+    background: linear-gradient(to right, #2e5af6, #0002cc);
+}
+
+header img.logo {
+    height: 40px;
+}
+
+header .container * {
+    vertical-align: middle;
+}

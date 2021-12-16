@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    background-color: #eee;
+}
+
+#app {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+}
+
+body, #app {
+    box-sizing: border-box;
+    height: 100vh;;
+    max-height: 100vh;
+}

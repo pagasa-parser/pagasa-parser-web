@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>PAGASA Parser</title>
+
+		<meta name="twitter:card" content="summary"/>
+		<meta name="twitter:creator" content="ChlodAlejandro"/>
+		<meta name="twitter:image" content="https://pagasa.chlod.net/images/logo.png"/>
+
+		<meta name="og:title" property="og:title" content="PAGASA Parser" />
+		<meta name="og:description" property="og:description" content="Free and open-source PAGASA Tropical Cyclone Bulletin parser and formatter.">
+		<meta name="og:image" property="og:image" content="https://pagasa.chlod.net/images/logo.png"/>
+
+		<link rel="shortcut" type="image/png" href="https://pagasa.chlod.net/images/logo.png">
+		<link rel="icon" type="image/png" href="https://pagasa.chlod.net/images/logo.png">
+
+		<link rel="stylesheet" href="styles/index.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+	</head>
+	<body>
+		<header class="text-white">
+			<div class="container">
+				<div id="leader">
+					<img src="images/logo.svg" alt="Logo">
+					<h1>PAGASA Parser</h1>
+				</div>
+				<p class="subtitle">
+					The PAGASA Parser is a set of libraries and a web interface which takes in
+					PAGASA Tropical Cyclone Bulletins and processes them into a machine-readable format,
+					completely free of charge.
+				</p>
+				<p>
+					You can install the parser as a <a href="//www.npmjs.com/package/pagasa-parser">npm library</a>,
+					or use it with a specifically-designed <a href="/app">web interface</a>.
+				</p>
+				<p>
+					PAGASA Parser and its developers are not affiliated with the Philippine Atmospheric, Geophysical and
+					Astronomical Services Administration.
+				</p>
+			</div>
+		</header>
+
+		<main>
+			<div class="container">
+				<p>
+					The PAGASA Parser was developed due to the lack of an easy-to-use API to grab active
+					PAGASA Tropical Cyclone Bulletins (TCBs). The core library, <code>pagasa-parser</code>,
+					is able to transcribe a standard list of areas like this:
+				</p>
+				<pre style="white-space: pre-wrap;"><code class="language-plaintext">The rest of mainland Cagayan, the eastern portion of Ilocos Norte (Pagudpud, Adams, Dumalneg, Bangui, Vintar, Carasi, Nueva Era, Burgos, Pasuquin, Bacarra, Laoag City, Piddig, Solsona, Dingras, Sarrat, San Nicolas), the rest of Apayao, the northern portion of Kalinga (Balbalan, Pinukpuk, City of Tabuk, Rizal), the eastern portion of Mountain Province (Paracelis), the northeastern portion of Abra (Tineg, Lacub, Malibcong), the northwestern and southeastern portions of Isabela (Santa Maria, Quezon, Mallig, Roxas, San Manuel, Cabatuan, Aurora, City of Cauayan, Angadanan, San Guillermo, Dinapigue, San Mariano, Cabagan, Santo Tomas, Delfin Albano, Tumauini, Quirino, Burgos, Gamu, Ilagan City, Luna, Reina Mercedes, Naguilian, Benito Soliven), and the northern portion of Aurora (Dilasag, Casiguran)</code></pre>
+				<p>
+					to this:
+				</p>
+				<pre><code>{
+    &quot;areas&quot;: {
+        &quot;0&quot;: [
+            {
+                &quot;name&quot;: &quot;Cagayan&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;rest&quot;,
+                    &quot;term&quot;: &quot;mainland&quot;
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Ilocos Norte&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;eastern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Pagudpud&quot;,
+                        &quot;Adams&quot;,
+                        &quot;Dumalneg&quot;,
+                        &quot;Bangui&quot;,
+                        &quot;Vintar&quot;,
+                        &quot;Carasi&quot;,
+                        &quot;Nueva Era&quot;,
+                        &quot;Burgos&quot;,
+                        &quot;Pasuquin&quot;,
+                        &quot;Bacarra&quot;,
+                        &quot;Laoag City&quot;,
+                        &quot;Piddig&quot;,
+                        &quot;Solsona&quot;,
+                        &quot;Dingras&quot;,
+                        &quot;Sarrat&quot;,
+                        &quot;San Nicolas&quot;
+                    ]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Apayao&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;rest&quot;
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Kalinga&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;northern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Balbalan&quot;,
+                        &quot;Pinukpuk&quot;,
+                        &quot;City of Tabuk&quot;,
+                        &quot;Rizal&quot;
+                    ]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Mountain Province&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;eastern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Paracelis&quot;
+                    ]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Abra&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;northeastern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Tineg&quot;,
+                        &quot;Lacub&quot;,
+                        &quot;Malibcong&quot;
+                    ]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Isabela&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;northwestern and southeastern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Santa Maria&quot;,
+                        &quot;Quezon&quot;,
+                        &quot;Mallig&quot;,
+                        &quot;Roxas&quot;,
+                        &quot;San Manuel&quot;,
+                        &quot;Cabatuan&quot;,
+                        &quot;Aurora&quot;,
+                        &quot;City of Cauayan&quot;,
+                        &quot;Angadanan&quot;,
+                        &quot;San Guillermo&quot;,
+                        &quot;Dinapigue&quot;,
+                        &quot;San Mariano&quot;,
+                        &quot;Cabagan&quot;,
+                        &quot;Santo Tomas&quot;,
+                        &quot;Delfin Albano&quot;,
+                        &quot;Tumauini&quot;,
+                        &quot;Quirino&quot;,
+                        &quot;Burgos&quot;,
+                        &quot;Gamu&quot;,
+                        &quot;Ilagan City&quot;,
+                        &quot;Luna&quot;,
+                        &quot;Reina Mercedes&quot;,
+                        &quot;Naguilian&quot;,
+                        &quot;Benito Soliven&quot;
+                    ]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;Aurora&quot;,
+                &quot;part&quot;: true,
+                &quot;includes&quot;: {
+                    &quot;type&quot;: &quot;section&quot;,
+                    &quot;term&quot;: &quot;portion&quot;,
+                    &quot;part&quot;: &quot;northern&quot;,
+                    &quot;objects&quot;: [
+                        &quot;Dilasag&quot;,
+                        &quot;Casiguran&quot;
+                    ]
+                }
+            }
+        ],
+        &quot;1&quot;: [],
+        &quot;2&quot;: []
+    }
+}</code></pre>
+				<p>
+					Special packages, like <code>source-pdf</code> can also transcribe files
+					directly, such as PAGASA's Tropical Cyclone Bulletin PDF files.
+				</p>
+				<pre class="code"><code>import PagasaParserPDFSource from "@pagasa-parser/source-pdf";
+
+const data = new PagasaParserPDFSource(path.join(__dirname, "bulletin.pdf"));
+data.parse().then(console.log);</code></pre>
+				<p>
+					All packages are written in JavaScript and are available on npm.
+				</p>
+			</div>
+		</main>
+
+		<footer class="text-white">
+			<div class="bottom-nav container">
+				<div><img src="images/logo.svg" alt="Logo"></div>
+				<div>
+					<b>Website</b>
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/app">App</a></li>
+					</ul>
+					<b>PAGASA</b>
+					<ul>
+						<li><a href="https://www.pagasa.dost.gov.ph/tropical-cyclone-bulletin-iframe/">Tropical Cyclone
+							Bulletin</a></li>
+					</ul>
+				</div>
+				<div>
+					<b>Packages</b>
+					<ul>
+						<li><a href="//github.com/pagasa-parser/pagasa-parser">pagasa-parser</a></li>
+						<li><a href="//github.com/pagasa-parser/source-pdf">@pagasa-parser/source-pdf</a></li>
+						<li><a href="//github.com/pagasa-parser/source-xml">@pagasa-parser/source-xml</a></li>
+						<li>
+							<a href="//github.com/pagasa-parser/formatter-wikipedia">@pagasa-parser/formatter-wikipedia</a>
+						</li>
+					</ul>
+				</div>
+				<div class="remarks">
+					Website licensed under the <a href="//www.gnu.org/licenses/agpl-3.0.en.html">AGPL v3.0</a>.<br/>
+					Packages licensed under the <a href="//www.apache.org/licenses/LICENSE-2.0.html">Apache License
+					2.0</a>.<br/>
+					Developed and maintained by <a href="//chlod.net">Chlod Alejandro</a>.<br/>
+					Not affiliated with the DOST-PAGASA.
+				</div>
+			</div>
+		</footer>
+		<script>hljs.configure({ ignoreUnescapedHTML: true }); hljs.highlightAll();</script>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "browser": false
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "ecmaFeatures": {
+            "impliedStrict": true
+        }
+    },
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1,
+                "FunctionDeclaration": {
+                    "parameters": "off"
+                },
+                "FunctionExpression": {
+                    "parameters": "off"
+                }
+            }
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-unused-vars": [
+            "warn"
+        ],
+        "camelcase": [
+            "warn"
+        ],
+        "prefer-const": [
+            "error",
+            {
+                "destructuring": "all"
+            }
+        ]
+    }
+}

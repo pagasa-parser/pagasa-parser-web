@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+}
+
+header {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #517aff, #0002cc);
+
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+    padding: 64px 0;
+}
+
+header a, footer :not(.remarks) > a,
+header a:visited, footer :not(.remarks) > a:visited {
+    color: white !important;
+}
+
+header a,
+header a:visited {
+    text-decoration: underline;
+}
+
+header a:active, footer :not(.remarks) > a:active,
+header a:focus, footer :not(.remarks) > a:focus,
+header a:hover, footer :not(.remarks) > a:hover {
+    color: #ccc !important;
+}
+
+#leader img {
+    width: 100px;
+    vertical-align: middle;
+}
+
+#leader h1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 0 22px;
+    font-size: 72px;
+    line-height: 72px;
+}
+
+.subtitle {
+    font-weight: 300;
+    margin: 32px 0;
+    font-size: 28px;
+}
+
+main {
+    font-weight: normal;
+    padding: 64px 0;
+    background-color: #eee;
+}
+
+footer {
+    background-color: #111;
+    min-height: 200px;
+}
+
+.bottom-nav img {
+    width: 125px;
+    margin-right: auto;
+}
+
+.bottom-nav {
+    padding: 32px 0;
+    display: flex;
+}
+
+.bottom-nav > div {
+    min-width: 100px;
+    margin-right: 32px;
+}
+
+.bottom-nav b {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.bottom-nav ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-weight: 100;
+}
+
+.remarks {
+    margin-left: auto;
+    color: gray;
+    text-align: right;
+    max-width: 40%;
+}
+
+@media only screen and (max-width: 768px) {
+    #leader h1 {
+        margin-left: 0;
+        display: block;
+    }
+
+    .bottom-nav {
+        flex-direction: column;
+    }
+
+    .remarks {
+        max-width: 100%;
+    }
+}
+
+pre code {
+    border-radius: 12px;
+    padding: 8px 8px 8px 16px;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    max-height: 300px;
+    overflow: auto;
+}

@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "./build",
+        "allowJs": false,
+        "target": "es6",
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "inlineSources": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "jsx": "react"
+    },
+    "include": [
+        "./src/**/*",
+        ".package.json"
+    ],
+    "exclude": [
+        "./node_modules/**/*"
+    ],
+    "ts-node": {
+        "transpileOnly": true
+    }
+}

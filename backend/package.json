@@ -1,0 +1,58 @@
+{
+    "name": "pagasa-parser-web",
+    "version": "1.0.0",
+    "description": "Backend server for a web interface of the PAGASA parser.",
+    "dependencies": {
+        "@pagasa-parser/formatter-wikipedia": "^1.0.9",
+        "@pagasa-parser/source-pdf": "^1.0.3",
+        "axios": "^0.24.0",
+        "body-parser": "^1.19.1",
+        "bunyan": "^1.8.15",
+        "bunyan-format": "^0.2.1",
+        "express": "^4.17.1",
+        "fs-jetpack": "^4.3.0",
+        "multer": "^1.4.4",
+        "pagasa-archiver": "^1.2.0",
+        "pagasa-parser": "^2.0.7"
+    },
+    "devDependencies": {
+        "@types/bunyan": "^1.8.8",
+        "@types/bunyan-format": "^0.2.4",
+        "@types/express": "^4.17.13",
+        "@types/jest": "^27.0.1",
+        "@types/multer": "^1.4.7",
+        "@typescript-eslint/eslint-plugin": "^4.6.0",
+        "cat": "^0.2.0",
+        "eslint": "^7.12.1",
+        "jest": "^27.1.0",
+        "ts-jest": "^27.0.5",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.2"
+    },
+    "scripts": {
+        "dev": "node -r ts-node/register src/PagasaParserWeb.ts",
+        "build": "tsc",
+        "test": "jest",
+        "coverage": "npm run coverage:full",
+        "coverage:full": "jest --coverage --collectCoverageFrom=src/**/*.{js,jsx,ts,tsx}",
+        "coverage:minimal": "jest --coverage",
+        "prepack": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pagasa-parser/pagasa-parser-web.git"
+    },
+    "keywords": [
+        "scraper",
+        "weather",
+        "json",
+        "philippines",
+        "typhoon"
+    ],
+    "author": "Chlod Alejandro <chlod@chlod.net> (https://chlod.net)",
+    "license": "AGPL-3.0",
+    "bugs": {
+        "url": "https://github.com/pagasa-parser/pagasa-parser-web/issues"
+    },
+    "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme"
+}
