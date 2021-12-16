@@ -1,9 +1,9 @@
-FROM node:16
+FROM node:16-alpine
 
 ENV NODE_ENV=production
 
-RUN apt-get update
-RUN apt-get -y install default-jre
+RUN apk update \
+    && apk add openjdk11
 
 # ====================================
 # Install dependencies
