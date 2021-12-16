@@ -1,63 +1,90 @@
-import React, {useCallback, useEffect} from "react";
+import React from "react";
+import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroupItem";
+import { ExpandedPAGASADocument } from "../../types/ExpandedPAGASADocument";
+import AppContext from "../AppContext";
+
 import "../../css/sidebar.css";
-import {Button, ListGroup, ListGroupItem} from "react-bootstrap";
-import {ArrowClockwise, FileEarmarkText} from "react-bootstrap-icons";
-import { ExpandedPAGASADocument } from "../../ExpandedPAGASADocument";
+import {ApiConnector} from "../../api/ApiConnector";
+import Icon from "../Icon";
 
-export function FileList({ bulletins, bulletinState } : {
-    bulletins: ExpandedPAGASADocument[],
-    bulletinState
-}) {
-    const [ activeBulletin, setActiveBulletin ] = bulletinState;
-    const changeBulletin = useCallback((bulletin) => {
-        setActiveBulletin(bulletin);
-    }, [ activeBulletin ]);
+export class FileList extends React.Component<{ bulletins: ExpandedPAGASADocument[] }, {}> {
 
-    return <ListGroup>
-        {bulletins.map(bulletin => <ListGroupItem key={bulletin.file} onClick={() => {
-            changeBulletin(bulletin);
-        }}>
-            <FileEarmarkText height={"21px"} width={"21px"}/> {bulletin.file}
-        </ListGroupItem>)}
-    </ListGroup>;
+    static contextType = AppContext;
+    declare context: React.ContextType<typeof AppContext>;
+
+    render() {
+        return <ListGroup>
+            {this.props.bulletins.map(bulletin => <ListGroupItem key={bulletin.file} onClick={() => {
+                this.context.setState({
+                    activeBulletin: {
+                        bulletin: bulletin
+                    }
+                });
+            }}>
+                <Icon icon="file-earmark-text"/> {bulletin.file}
+            </ListGroupItem>)}
+        </ListGroup>;
+    }
 }
 
-export default function({ bulletinState } : {
-    bulletinState
-}) : JSX.Element {
-    const [ loaded, setLoaded ] = React.useState(false);
-    const [ bulletins, setBulletins ] = React.useState(null);
+export default class FileSidebar extends React.Component {
 
-    const reloadList = useCallback(() => {
-        fetch("/api/v1/bulletin/list")
-            .then(d => d.json())
-            .then(j => {
-                setLoaded(true);
-                setBulletins(j.bulletins);
-            });
-    }, [ loaded, bulletins ]);
-    useEffect(() => {
-        if (!loaded)
-            reloadList();
-    });
+    static contextType = AppContext;
+    declare context: React.ContextType<typeof AppContext>;
 
+    private get availableBulletins() {
+        return this.context.state.availableBulletins;
+    }
 
-    return <div id={"sidebar"}>
-        <div className={"sidebar-head"}>
-            <span>Available bulletins</span>
-            <Button variant={"outline-secondary"} onClick={reloadList}>
-                <ArrowClockwise height={"24px"} />
-            </Button>
-        </div>
-        <div className={"sidebar-list"}>
-            {
-                bulletins != null && bulletins.length > 0
-                ? <FileList bulletins={bulletins}
-                            bulletinState={bulletinState} />
-                : (
-                    <div className={"note"}>{loaded ? "No bulletins found." : "Loading..."}</div>
-                )
+    reload() {
+        ApiConnector.bulletinList({
+            headers: {
+                "Cache-Control": null
             }
-        </div>
-    </div>;
+        })
+            .then(([bulletins, age]) => {
+                this.context.setState({
+                    availableBulletins: bulletins,
+                    bulletinListAge: age
+                });
+            })
+            .catch(e => this.context.showError(e));
+    }
+
+    componentDidMount() {
+        if (this.availableBulletins == null) {
+            this.reload();
+        }
+    }
+
+    render() {
+        let note;
+        if (this.context.state.bulletinListAge > 300000 && new Date().getUTCHours() % 3 == 0) {
+            note = `The bulletin list was last cached ${Math.round(
+                        this.context.state.bulletinListAge / 60000
+            )} minutes ago. New bulletins may be available.`;
+        } else if (this.availableBulletins != null && this.availableBulletins.length == 0) {
+            note = "No bulletins found.";
+        } else if (this.availableBulletins == null) {
+            note = "Loading...";
+        }
+
+        return <div id={"sidebar"}>
+            <div className={"sidebar-head"}>
+                <span>Available bulletins</span>
+                <Button variant={"outline-secondary"} onClick={() => this.reload()}>
+                    <Icon icon="arrow-clockwise" />
+                </Button>
+            </div>
+            {note && <div className={"sidebar-note"}>{note}</div>}
+            <div className={"sidebar-list"}>
+                {this.availableBulletins != null && this.availableBulletins.length > 0 &&
+                    <FileList bulletins={this.availableBulletins} />
+                }
+            </div>
+        </div>;
+    }
+
 }

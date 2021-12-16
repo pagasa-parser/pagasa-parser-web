@@ -4,7 +4,8 @@ import {BulletinListCache} from "../../cache/BulletinListCache";
 import axios from "axios";
 
 interface BulletinListEndpointResponse extends ApiEndpointResponse {
-    bulletins: typeof BulletinListCache["cache"]
+    bulletins: typeof BulletinListCache["cache"],
+    age?: number
 }
 
 export class BulletinListEndpoint extends ApiEndpoint<BulletinListEndpointResponse> {
@@ -16,12 +17,13 @@ export class BulletinListEndpoint extends ApiEndpoint<BulletinListEndpointRespon
 
     async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         res.set("Content-Type", "application/json");
-        if (this.getCacheAge() < 20000) {
+        if (this.getCacheAge() < 60000 && req.header("Cache-Control") !== "no-cache") {
             this.sendCache(res);
         } else {
             this.setAndSendCache(res, {
                 error: false,
-                bulletins: (await BulletinListCache.get())
+                bulletins: (await BulletinListCache.get()),
+                age: BulletinListCache.getAge()
             });
         }
     }

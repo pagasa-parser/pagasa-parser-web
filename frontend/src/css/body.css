@@ -5,8 +5,8 @@ main {
     flex-direction: row;
 }
 
-#jsonPanel, #formatterPanel {
-    width: calc((100% - 250px) / 2);
+#bulletinInfoPanel {
+    flex: 1;
     padding: 16px;
     border-right: 1px solid lightgray;
     overflow-y: auto;
@@ -20,3 +20,42 @@ main {
 .parseStep-button {
     margin-bottom: 8px;
 }
+
+#bulletinInfoPanel .actionBox {
+    float: right;
+}
+
+#bulletinInfoPanel .actionBox button {
+    margin-left: 8px;
+}
+
+.formatterPanel-head {
+    padding-bottom: 16px;
+    border-bottom: 1px solid lightgray;
+
+    display: flex;
+}
+
+.formatterPanel-head button {
+    margin-left: 16px;
+}
+
+.formatterPanel-displayHead {
+    display: flex;
+}
+
+.formatterPanel-displayHead h1 {
+    margin-right: auto;
+}
+
+.formatterPanel-displayHead div {
+    display: flex;
+    align-items: center;
+}
+
+.formatterPanel-displayHead button {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-left: 8px;
+}
+

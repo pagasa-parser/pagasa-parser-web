@@ -17,10 +17,12 @@
     border-bottom: 1px solid lightgray;
 }
 
-#sidebar .note {
-    padding: 8px 16px;
+#sidebar .sidebar-note {
+    font-size: small;
+    padding: 4px 8px;
     font-style: italic;
     color: gray;
+    border-bottom: 1px solid lightgray;
 }
 
 #sidebar .sidebar-list {
@@ -48,5 +50,5 @@
 }
 
 #sidebar .list-group-item * {
-    vertical-align: text-top;
+    vertical-align: baseline;
 }

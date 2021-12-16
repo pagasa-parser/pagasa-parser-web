@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
-const { ProgressPlugin } = require("webpack");
+const webpack = require("webpack");
 
 module.exports = {
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
@@ -26,12 +26,13 @@ module.exports = {
         extensions: [".js", ".ts", ".tsx", ".json"]
     },
     plugins: [
-        new ProgressPlugin({
+        new webpack.ProgressPlugin({
             activeModules: true,
             entries: true,
             modules: true,
             dependencies: true
-        })
+        }),
+        // new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)()
     ],
     module: {
         rules: [
