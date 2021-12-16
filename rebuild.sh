@@ -1,3 +1,4 @@
+docker container stop pagasa-parser-web
 docker container rm pagasa-parser-web
 docker rmi pagasa-parser-web
 docker build -t pagasa-parser-web .
