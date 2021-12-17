@@ -1,4 +1,6 @@
-VERSION=`cat .docker.imageversion | tr -d "[:space:]"`
+cd ..
+
+VERSION=`cat .version | tr -d "[:space:]"`
 
 docker container stop pagasa-parser-web
 docker container rm pagasa-parser-web
