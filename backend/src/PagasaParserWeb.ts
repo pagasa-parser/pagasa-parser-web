@@ -61,6 +61,7 @@ export class PagasaParserWeb {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use((req, res, next) => {
             this.log.info(`${req.method} ${req.header("x-forwarded-for") ?? req.ip} ${req.path}`);
+            res.set("Server", `pagasa-parser-web/${packageInfo.version}`);
             next();
         });
 

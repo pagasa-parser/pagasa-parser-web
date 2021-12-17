@@ -13,3 +13,7 @@ header img.logo {
 header .container * {
     vertical-align: middle;
 }
+
+header .nav * {
+    display: inline-block;
+}
