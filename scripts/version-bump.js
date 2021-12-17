@@ -38,6 +38,9 @@ const childProcess = require("child_process");
     console.log("[i] Making commit...");
     childProcess.spawnSync("git", ["add", "."], { cwd: root });
     childProcess.spawnSync("git", ["commit", "-m", newVersion], { cwd: root })
+    childProcess.spawnSync("git", ["tag", `v${newVersion}`], { cwd: root });
+    childProcess.spawnSync("git", ["push"], { cwd: root });
+    childProcess.spawnSync("git", ["push", "origin", "tag", `v${newVersion}`], { cwd: root });
 
     console.log("[i] " + newVersion);
 })();

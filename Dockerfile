@@ -3,7 +3,7 @@ FROM node:16-alpine
 ENV NODE_ENV=production
 
 RUN apk update \
-    && apk add openjdk11
+    && apk add openjdk11-jre-headless
 
 # ====================================
 # Install dependencies
@@ -36,6 +36,7 @@ RUN npm run build
 # Start
 # ====================================
 
+COPY .version /usr/src/app/.version
 WORKDIR /usr/src/app/backend
 
 EXPOSE 12464
