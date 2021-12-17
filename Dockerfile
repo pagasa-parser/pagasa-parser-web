@@ -44,7 +44,7 @@ COPY .version /usr/src/app/.version
 WORKDIR /usr/src/app/backend
 
 # Symlink static to frontend build path
-RUN ln -sf ../frontend/build static/app/js
+RUN ln -sf ../../../frontend/build static/app/js
 
 EXPOSE 12464
 
