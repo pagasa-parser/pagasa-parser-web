@@ -13,7 +13,7 @@ const childProcess = require("child_process");
             cwd: root
         }
     );
-    if (unstaged.status === 0) {
+    if (unstaged.status !== 0) {
         console.error("[E] Unstaged changes found. Stage your changes first.");
         return;
     }
