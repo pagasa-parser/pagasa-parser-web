@@ -45,10 +45,7 @@ jobs:
                       chlod/pagasa-parser-web:latest 
                       chlod/pagasa-parser-web:${{ steps.version.outputs.content }}
                   # Only push when tagged
-                  push: ${{ github.ref_type == 'tag' || (
-                      github.actor == github.repository_owner
-                      && startsWith(github.event.head_commit.message, "[overwrite]")
-                  ) }}
+                  push: ${{ github.ref_type == 'tag' || (github.actor == github.repository_owner && startsWith(github.event.head_commit.message, "[overwrite]")) }}
 
             - name: Image digest
               run: echo ${{ steps.docker_build.outputs.digest }}
