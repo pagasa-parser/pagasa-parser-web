@@ -35,6 +35,14 @@ jobs:
               with:
                   path: ./.version
 
+            - name: Docker Hub push check
+              run: |
+                  echo REF_TYPE:  ${{ github.ref_type }} 
+                  echo PUSHER:    ${{ github.event.pusher.name }}
+                  echo REPO_OWN:  ${{ github.repository_owner }}
+                  echo MESSAGE:   ${{ github.event.head_commit.message }}
+                  echo OVERWRITE: ${{ startsWith(github.event.head_commit.message, '[overwrite]') }}
+
             - name: Build image and push to Docker Hub
               id: docker_build
               uses: docker/build-push-action@v2
