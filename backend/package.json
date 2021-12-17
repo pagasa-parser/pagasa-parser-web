@@ -1,11 +1,11 @@
 {
     "name": "pagasa-parser-web",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Backend server for a web interface of the PAGASA parser.",
     "main": "build/PagasaParserWeb.js",
     "dependencies": {
         "@pagasa-parser/formatter-wikipedia": "^1.0.9",
-        "@pagasa-parser/source-pdf": "^1.0.3",
+        "@pagasa-parser/source-pdf": "^1.0.5",
         "axios": "^0.24.0",
         "body-parser": "^1.19.1",
         "bunyan": "^1.8.15",
