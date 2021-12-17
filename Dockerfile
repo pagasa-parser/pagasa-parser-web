@@ -1,7 +1,5 @@
 FROM node:16-alpine
 
-ENV NODE_ENV=production
-
 RUN apk update \
     && apk add openjdk11-jre-headless
 
@@ -22,6 +20,8 @@ RUN npm install ../backend
 # ====================================
 # Copy and build
 # ====================================
+
+ENV NODE_ENV=production
 
 # Backend must go first
 WORKDIR /usr/src/app/backend
