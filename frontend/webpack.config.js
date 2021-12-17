@@ -2,6 +2,17 @@
 const path = require("path");
 const webpack = require("webpack");
 
+const plugins = [];
+
+if (process.env.HEADLESS !== "true") {
+    plugins.push(new webpack.ProgressPlugin({
+        activeModules: true,
+        entries: true,
+        modules: true,
+        dependencies: true
+    }));
+}
+
 module.exports = {
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
     entry: "./src/app.tsx",
@@ -25,15 +36,7 @@ module.exports = {
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".json"]
     },
-    plugins: [
-        new webpack.ProgressPlugin({
-            activeModules: true,
-            entries: true,
-            modules: true,
-            dependencies: true
-        }),
-        // new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)()
-    ],
+    plugins: plugins,
     module: {
         rules: [
             {

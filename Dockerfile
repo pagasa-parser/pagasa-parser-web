@@ -3,6 +3,9 @@ FROM node:16-alpine
 RUN apk update \
     && apk add openjdk11-jre-headless
 
+# Disable npm update message
+RUN npm config set update-notifier false
+
 # ====================================
 # Install dependencies
 # ====================================
@@ -22,6 +25,7 @@ RUN npm install ../backend
 # ====================================
 
 ENV NODE_ENV=production
+ENV HEADLESS=true
 
 # Backend must go first
 WORKDIR /usr/src/app/backend
@@ -38,6 +42,9 @@ RUN npm run build
 
 COPY .version /usr/src/app/.version
 WORKDIR /usr/src/app/backend
+
+# Symlink static to frontend build path
+RUN ln -sf ../frontend/build static/app/js
 
 EXPOSE 12464
 
