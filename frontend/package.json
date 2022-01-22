@@ -1,6 +1,6 @@
 {
     "name": "pagasa-parser-web-frontend",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Frontend for the web interface of the PAGASA parser.",
     "devDependencies": {
         "@types/express": "^4.17.13",
@@ -42,7 +42,8 @@
         "coverage": "npm run coverage:full",
         "coverage:full": "jest --coverage --collectCoverageFrom=src/**/*.{js,jsx,ts,tsx}",
         "coverage:minimal": "jest --coverage",
-        "prepack": "npm run build"
+        "prepack": "npm run build",
+        "preversion": "node ../scripts/version-forbid.js"
     },
     "repository": {
         "type": "git",
