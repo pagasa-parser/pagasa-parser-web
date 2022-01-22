@@ -1,0 +1,28 @@
+{
+    "name": "pagasa-parser-web",
+    "version": "1.0.3",
+    "description": "A web backend for the PAGASA parser, used for web-based and graphical data processing.",
+    "scripts": {
+        "build": "bash scripts/build.sh",
+        "version": "node scripts/version-update.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pagasa-parser/pagasa-parser-web.git"
+    },
+    "keywords": [
+        "weather",
+        "json",
+        "cyclone",
+        "typhoon",
+        "pagasa",
+        "pagasa-parser",
+        "philippines"
+    ],
+    "author": "Chlod Alejandro <chlod@chlod.net>",
+    "license": "AGPL-3.0",
+    "bugs": {
+        "url": "https://github.com/pagasa-parser/pagasa-parser-web/issues"
+    },
+    "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme"
+}
