@@ -5,6 +5,7 @@ const {
     frontendPackageLockPath
 } = require("./versions.js");
 const child_process = require("child_process");
+const packageInfo = require("../package.json");
 
 (() => {
     console.log("[i] Adding extra version files...");
@@ -21,6 +22,13 @@ const child_process = require("child_process");
     console.log(
         child_process.spawnSync("git", [
             "commit", "--amend", "--no-edit"
+        ]).stdout.toString("utf8")
+    );
+
+    console.log("[i] Updating tag...");
+    console.log(
+        child_process.spawnSync("git", [
+            "tag", "-fa", "v" + packageInfo.version
         ]).stdout.toString("utf8")
     );
 })();
