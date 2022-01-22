@@ -1,6 +1,6 @@
 {
     "name": "pagasa-parser-web",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "description": "Backend server for a web interface of the PAGASA parser.",
     "main": "build/PagasaParserWeb.js",
     "dependencies": {
