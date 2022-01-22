@@ -23,7 +23,9 @@ if (process.env.ANALYZE) {
 
 module.exports = {
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
-    entry: path.resolve(__dirname, "src", "app.tsx"),
+    entry: {
+        app: path.resolve(__dirname, "src", "app.tsx")
+    },
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "[name].js"
