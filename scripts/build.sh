@@ -3,7 +3,7 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 cd $SCRIPTPATH/..
 
-VERSION=`cat .version | tr -d "[:space:]"`
+VERSION=`node -p "require('./package.json').version" | tr -d "[:space:]"`
 
 docker container stop pagasa-parser-web
 docker container rm pagasa-parser-web

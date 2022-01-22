@@ -40,7 +40,6 @@ RUN npm run build
 # Start
 # ====================================
 
-COPY .version /usr/src/app/.version
 WORKDIR /usr/src/app/backend
 
 # Symlink static to frontend build path
