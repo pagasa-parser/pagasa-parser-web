@@ -28,7 +28,7 @@ const packageInfo = require("../package.json");
     console.log("[i] Updating tag...");
     console.log(
         child_process.spawnSync("git", [
-            "tag", "-fa", "v" + packageInfo.version
+            "tag", "-fas", `v${packageInfo.version}`, "-m", packageInfo.version
         ]).stdout.toString("utf8")
     );
 })();
