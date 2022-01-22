@@ -37,6 +37,16 @@ COPY frontend/ .
 RUN npm run build
 
 # ====================================
+# Cleanup
+# ====================================
+
+WORKDIR /usr/src/app/backend
+RUN npm prune --production
+
+WORKDIR /usr/src/app/frontend
+RUN npm prune --production
+
+# ====================================
 # Start
 # ====================================
 

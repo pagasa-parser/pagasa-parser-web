@@ -1,7 +1,7 @@
 # PAGASA Parser Web
 PAGASA Parser Web combines all PAGASA Parser formatters together with [@pagasa-parser/source-pdf](https://github.com/pagasa-parser/source-pdf) to automatically scrape the [PAGASA website](http://bagong.pagasa.dost.gov.ph) for bulletins. This means you can run the PAGASA Parser anytime, anywhere, with all bulletins currently available and format them to your heart's content.
 
-You can find a live version of this website at [pagasa.chlod.net](https://pagasa.chlod.net). If you wish to run your own version of PAGASA Parser Web, it is also available as a [Docker image](https://hub.docker.com/r/chlod/pagasa-parser-web) (available at port 12464).
+You can find a live version of this website at [pagasa.chlod.net](https://pagasa.chlod.net). If you wish to run your own version of PAGASA Parser Web, it is also available as a [Docker image](https://hub.docker.com/r/chlod/pagasa-parser-web) (available at port 80).
 
 Hosting for pagasa.chlod.net is provided by Chlod Alejandro. If you'd like to help alleviate server costs, please consider sponsoring this project.
 
@@ -11,7 +11,7 @@ Running PAGASA Parser standalone requires Java to run the PDF parser in [@pagasa
 ## Docker
 The Docker container contains everything needed to run PAGASA Parser and also exposes the web server at port 80. To get started easily, run the following command in your preferred shell.
 ```sh
-docker run -d --name pagasa-parser-web -p 12464:12464 chlod/pagasa-parser-web:latest
+docker run -d --name pagasa-parser-web -p 12464:80 chlod/pagasa-parser-web:latest
 ```
 
 ## Development
