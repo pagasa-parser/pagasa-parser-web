@@ -3,18 +3,17 @@ const fs = require("fs");
 const path = require("path");
 
 const packageInfo = require("../package.json");
-const backendPackage = require("../backend/package.json");
-const frontendPackage = require("../frontend/package.json");
-const child_process = require("child_process");
+
+const {
+    backendPackagePath,
+    backendPackageLockPath,
+    frontendPackagePath,
+    frontendPackageLockPath
+} = require("./versions.js");
 
 (() => {
     const version = packageInfo.version;
     console.log(`[i] Updating package.json versions to ${version}...`);
-
-    const backendPackagePath = "../backend/package.json";
-    const frontendPackagePath = "../frontend/package.json";
-    const backendPackageLockPath = "../backend/package-lock.json";
-    const frontendPackageLockPath = "../frontend/package-lock.json";
 
     const backendPackage = require(backendPackagePath);
     const frontendPackage = require(frontendPackagePath);
@@ -48,10 +47,4 @@ const child_process = require("child_process");
         JSON.stringify(frontendPackageLock, null, 4)
     );
     console.log("[i] Set version of frontend package-lock.json");
-
-    child_process.spawnSync("git", [
-        "add",
-        backendPackagePath, backendPackageLockPath,
-        frontendPackagePath, frontendPackageLockPath
-    ]);
 })();

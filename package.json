@@ -4,7 +4,8 @@
     "description": "A web backend for the PAGASA parser, used for web-based and graphical data processing.",
     "scripts": {
         "build": "bash scripts/build.sh",
-        "version": "node scripts/version-update.js"
+        "version": "node scripts/version-update.js",
+        "postversion": "node scripts/version-add.js"
     },
     "repository": {
         "type": "git",
