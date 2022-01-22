@@ -29,12 +29,6 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Read version
-              id: version
-              uses: juliangruber/read-file-action@v1
-              with:
-                  path: ./.version
-
             - name: Build image and push to Docker Hub
               id: docker_build
               uses: docker/build-push-action@v2
