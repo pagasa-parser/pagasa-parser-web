@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const webpack = require("webpack");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const plugins = [];
+/** @type {any[]} */
+const plugins = [
+    new webpack.ids.HashedModuleIdsPlugin()
+];
 
 if (process.env.HEADLESS !== "true") {
     plugins.push(new webpack.ProgressPlugin({
@@ -13,12 +17,42 @@ if (process.env.HEADLESS !== "true") {
     }));
 }
 
+if (process.env.ANALYZE) {
+    plugins.push(new BundleAnalyzerPlugin());
+}
+
 module.exports = {
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
-    entry: "./src/app.tsx",
+    entry: {
+        "app": path.resolve(__dirname, "src", "app.tsx")
+    },
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "app.js"
+        filename: "[name].js"
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 1024,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        const packageName =
+                            module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+                                .replace("@", "");
+
+                        if (packageName.startsWith("react"))
+                            return "pkg.react";
+                        else if (packageName.startsWith("bootstrap"))
+                            return "pkg.bootstrap";
+                        else
+                            return "pkg.misc";
+                    },
+                },
+            },
+        }
     },
     devServer: {
         devMiddleware: {
