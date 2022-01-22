@@ -46,6 +46,7 @@ WORKDIR /usr/src/app/backend
 # Symlink static to frontend build path
 RUN ln -sf ../../../frontend/build static/app/js
 
-EXPOSE 12464
+ENV PORT 80
+EXPOSE 80
 
 CMD [ "node", "build/PagasaParserWeb.js" ]
