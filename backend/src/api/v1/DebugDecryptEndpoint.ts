@@ -1,8 +1,6 @@
-import {ApiEndpoint, ApiEndpointResponse} from "./ApiEndpoint";
+import {ApiEndpoint} from "./ApiEndpoint";
 import express from "express";
-import {BulletinListCache} from "../../cache/BulletinListCache";
 import {DebugHandler} from "../../debug/DebugHandler";
-import {PagasaParserWeb} from "../../PagasaParserWeb";
 
 export class DebugDecryptEndpoint extends ApiEndpoint<string> {
 

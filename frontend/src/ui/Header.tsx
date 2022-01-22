@@ -3,8 +3,7 @@ import Container from "react-bootstrap/Container";
 import NavItem from "react-bootstrap/NavItem";
 import Nav from "react-bootstrap/Nav";
 import "../css/header.css";
-
-const packageInfo = require("../../package.json");
+import HeaderAbout from "./HeaderAbout";
 
 function NavLink({ href, label } : { href: string, label: string}) : JSX.Element {
     return <NavItem>
@@ -22,14 +21,7 @@ export default class Header extends React.Component {
                     <NavLink href={"/"} label={"Home"} />
                     <NavLink href={"https://github.com/pagasa-parser/pagasa-parser-web"} label={"GitHub"} />
                 </Nav>
-                <div>
-                    <div className={"text-white lh-1 fw-bold"}>
-                        PAGASA Parser
-                    </div>
-                    <div className={"text-white lh-1 text-end"} style={{fontSize: "0.8rem"}}>
-                        v{packageInfo.version}
-                    </div>
-                </div>
+                <HeaderAbout />
             </Container>
         </header>;
     }

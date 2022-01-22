@@ -16,6 +16,7 @@ import {BulletinManager} from "./bulletin/BulletinManager";
 import {BulletinParseEndpoint} from "./api/v1/BulletinParseEndpoint";
 import {BulletinHasEndpoint} from "./api/v1/BulletinHasEndpoint";
 import {FormatWikipediaEndpoint} from "./api/v1/FormatWikipediaEndpoint";
+import {MetaLicensesEndpoint} from "./api/v1/MetaLicensesEndpoint";
 
 const packageInfo = require("../package.json");
 
@@ -92,6 +93,7 @@ export class PagasaParserWeb {
         );
 
         this.app.post("/api/v1/debug/decrypt", ApiEndpoint.transform(DebugDecryptEndpoint.i));
+        this.app.get("/api/v1/meta/licenses", ApiEndpoint.transform(MetaLicensesEndpoint.i));
 
         this.server = this.app.listen(process.env.PORT ?? 12464, () => {
             this.log.info(`Server started on port ${process.env.PORT ?? 12464}.`);

@@ -3,10 +3,8 @@ import FormCheckInput from "react-bootstrap/FormCheckInput";
 import Button from "react-bootstrap/Button";
 import FormCheck from "react-bootstrap/FormCheck";
 import FormCheckLabel from "react-bootstrap/FormCheckLabel";
-import Highlight from "../Highlight";
 import AppContext from "../AppContext";
 import {ApiConnector} from "../../api/ApiConnector";
-import Icon from "../Icon";
 import BulletinFormatterPanel from "./BulletinFormatterPanel";
 
 function BulletinInfoPanelBlank()  {
@@ -87,8 +85,14 @@ class BulletinInfoPanelRequest extends React.Component<{}, {
         return <Fragment>
             <h1>Bulletin not parsed</h1>
             <p>
-                This bulletin hasn't been parsed yet. In order to do this, we need to
-                download the bulletin from PAGASA and then process it.
+                "<a href={this.activeBulletin.bulletin.link}>{this.activeBulletin.bulletin.file}</a>"
+                hasn't been parsed yet. In order to do this, we need to
+                download the bulletin from PAGASA and then process it. Press the respective
+                buttons below to begin this process.
+            </p>
+            <p>
+                <b>NOTE:</b> All downloads are made server-side. Nothing is stored on your
+                computer.
             </p>
             <ol>
                 <li className={"parseStep"}>

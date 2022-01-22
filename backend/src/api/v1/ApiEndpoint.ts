@@ -56,14 +56,16 @@ export abstract class ApiEndpoint<T> {
     }
 
     setCache(data: T) : T {
+        PagasaParserWeb.log.debug("Cache set");
         this.cacheTime = Date.now();
         return (this.cacheData = data);
     }
     sendCache(res: express.Response) {
+        PagasaParserWeb.log.debug("Hit cache");
         res.send(this.cacheData);
     }
     setAndSendCache(res: express.Response, data: T) {
-        res.send(this.cacheData = data);
+        res.send(this.setCache(data));
     }
     getCacheAge() : number {
         return Date.now() - this.cacheTime;

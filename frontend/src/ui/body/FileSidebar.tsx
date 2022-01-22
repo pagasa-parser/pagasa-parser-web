@@ -16,15 +16,22 @@ export class FileList extends React.Component<{ bulletins: ExpandedPAGASADocumen
 
     render() {
         return <ListGroup>
-            {this.props.bulletins.map(bulletin => <ListGroupItem key={bulletin.file} onClick={() => {
-                this.context.setState({
-                    activeBulletin: {
-                        bulletin: bulletin
-                    }
-                });
-            }}>
-                <Icon icon="file-earmark-text"/> {bulletin.file}
-            </ListGroupItem>)}
+            {
+                this.props.bulletins
+                    .sort((a, b) => {
+                        return a.count === b.count ? a.name.localeCompare(b.name) : b.count - a.count;
+                    })
+                    .map(bulletin => {
+                        return <ListGroupItem key={bulletin.file} onClick={() => {
+                            this.context.setState({
+                                activeBulletin: {
+                                    bulletin: bulletin
+                                }
+                            });
+                        }}>
+                            <Icon icon="file-earmark-text"/> {bulletin.file}
+                        </ListGroupItem>;
+                    })}
         </ListGroup>;
     }
 }

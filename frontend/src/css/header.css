@@ -10,10 +10,22 @@ header img.logo {
     height: 40px;
 }
 
-header .container * {
+header .container > * {
     vertical-align: middle;
 }
 
-header .nav * {
+header .nav > * {
     display: inline-block;
+}
+
+.about {
+    cursor: pointer;
+}
+
+.about:hover {
+    text-decoration: underline;
+}
+
+.about-modal .modal-dialog {
+    max-width: 800px;
 }
