@@ -1,0 +1,38 @@
+name: Audit
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    audit:
+        name: Perform NPM audits
+        runs-on: ubuntu-latest
+        env:
+            NODE_ENV: development
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install dependencies (backend)
+              run: cd backend && npm ci
+
+            - name: Install dependencies (frontend)
+              run: cd frontend && npm ci
+
+            - name: Perform audit (backend)
+              uses: oke-py/npm-audit-action@v1.8.3
+              with:
+                  working_directory: backend
+                  audit_level: moderate
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  create_issues: false
+
+            - name: Perform audit (frontend)
+              uses: oke-py/npm-audit-action@v1.8.3
+              with:
+                  working_directory: frontend
+                  audit_level: moderate
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  create_issues: false
