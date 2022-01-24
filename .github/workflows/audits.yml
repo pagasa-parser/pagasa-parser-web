@@ -27,7 +27,6 @@ jobs:
                   working_directory: backend
                   audit_level: moderate
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  create_issues: false
 
             - name: Perform audit (frontend)
               uses: oke-py/npm-audit-action@v1.8.3
@@ -35,4 +34,3 @@ jobs:
                   working_directory: frontend
                   audit_level: moderate
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  create_issues: false
