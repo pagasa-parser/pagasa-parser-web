@@ -28,7 +28,11 @@ export class PagasaParserWeb {
     static app : express.Application;
     static server : net.Server;
 
-    static readonly userAgent = `pagasa-parser-web (https://pagasa.chlod.net; chlod@chlod.net) axios/${
+    static readonly userAgent = `pagasa-parser-web/${
+        packageInfo.version
+    } ${
+        !!process.env.PPW_OWNER ? `(${process.env.PPW_OWNER})` : ""
+    } axios/${
         packageInfo.dependencies.axios.replace(/\^/g, "")
     }; node/${
         process.version
@@ -53,6 +57,10 @@ export class PagasaParserWeb {
         BulletinManager.i.initialize(this.dataDirectory);
         DebugHandler.i.initialize(this.dataDirectory);
 
+        if (!process.env.PPW_OWNER) {
+            this.log.warn("An owner was not set with the PPW_OWNER environment variable.");
+            this.log.warn("Please set the PPW_OWNER environment variable as a courtesy to PAGASA websites!");
+        }
         axios.defaults.headers.common["User-Agent"] = this.userAgent;
         this.log.info(`Server started at ${new Date().toUTCString()}`)
 
