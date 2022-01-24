@@ -15,7 +15,7 @@ export class BulletinManager {
     private bulletinsDirectory : string;
     private parsedDirectory : string;
 
-    private constructor() { }
+    private constructor() { /* private constructor */ }
 
     initialize(dataDirectory : string) {
         this.dataDirectory = dataDirectory;

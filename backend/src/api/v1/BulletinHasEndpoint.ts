@@ -15,7 +15,7 @@ export class BulletinHasEndpoint extends ApiEndpoint<BulletinHasEndpointResponse
 
     private constructor() { super(); }
 
-    async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    async handleRequest(req: express.Request, res: express.Response): Promise<void> {
         res.set("Content-Type", "application/json");
 
         if (req.params.bulletin != null) {

@@ -16,7 +16,7 @@ export class FormatWikipediaEndpoint extends ApiEndpoint<FormatWikipediaEndpoint
 
     private constructor() { super(); }
 
-    async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    async handleRequest(req: express.Request, res: express.Response): Promise<void> {
         res.set("Content-Type", "application/json");
 
         if (req.params.bulletin != null) {
@@ -27,12 +27,12 @@ export class FormatWikipediaEndpoint extends ApiEndpoint<FormatWikipediaEndpoint
             }
 
             if (!BulletinManager.i.has(bulletin)) {
-                this.sendError(res, "The bulletin has not yet been cached with GET bulletin/download.", 412)
+                this.sendError(res, "The bulletin has not yet been cached with GET bulletin/download.", 412);
                 return;
             }
 
             if (!BulletinManager.i.hasParsed(bulletin)) {
-                this.sendError(res, "The bulletin has not yet been parsed with GET bulletin/parse.", 412)
+                this.sendError(res, "The bulletin has not yet been parsed with GET bulletin/parse.", 412);
                 return;
             }
 

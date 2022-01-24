@@ -18,6 +18,7 @@ import {BulletinHasEndpoint} from "./api/v1/BulletinHasEndpoint";
 import {FormatWikipediaEndpoint} from "./api/v1/FormatWikipediaEndpoint";
 import {MetaLicensesEndpoint} from "./api/v1/MetaLicensesEndpoint";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageInfo = require("../package.json");
 
 export { ExpandedPAGASADocument } from "./cache/BulletinListCache";
@@ -62,7 +63,7 @@ export class PagasaParserWeb {
             this.log.warn("Please set the PPW_OWNER environment variable as a courtesy to PAGASA websites!");
         }
         axios.defaults.headers.common["User-Agent"] = this.userAgent;
-        this.log.info(`Server started at ${new Date().toUTCString()}`)
+        this.log.info(`Server started at ${new Date().toUTCString()}`);
 
         this.app = express();
 

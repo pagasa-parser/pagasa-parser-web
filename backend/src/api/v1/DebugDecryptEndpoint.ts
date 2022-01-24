@@ -9,7 +9,7 @@ export class DebugDecryptEndpoint extends ApiEndpoint<string> {
 
     private constructor() { super(); }
 
-    async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    async handleRequest(req: express.Request, res: express.Response): Promise<void> {
         res.set("Content-Type", "text/plain");
 
         if (req.body?.digest == null)

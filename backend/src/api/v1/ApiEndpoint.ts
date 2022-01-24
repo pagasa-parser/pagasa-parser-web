@@ -13,14 +13,22 @@ export interface ApiEndpointResponse {
     error: false | ErrorDetails;
 }
 
-const errorHelp = `If this error persists, please email the details to chlod@chlod.net or tweet to @toolfrog.`;
+const errorHelp = "If this error persists, please file an issue at https://github.com/pagasa-parser/pagasa-parser-web.";
 
 export abstract class ApiEndpoint<T> {
 
     cacheData : T
-    cacheTime : number = 0;
+    cacheTime  = 0;
 
+    /**
+     * Transforms an endpoint handler to one usable in an express function, ensuring
+     * that `this` will work inside the handler.
+     *
+     * @param endpoint The endpoint to transform
+     */
     static transform(endpoint: ApiEndpoint<any>) :
+        // These are, in-fact, used by Express
+        // eslint-disable-next-line no-unused-vars
         (req : express.Request, res: express.Response, next: express.NextFunction) => void
     {
         return async (req : express.Request, res: express.Response, next: express.NextFunction) => {
@@ -30,10 +38,11 @@ export abstract class ApiEndpoint<T> {
                 PagasaParserWeb.log.error("Error occurred while processing request.", e);
                 endpoint.sendError(res, e, 500);
             }
-        }
+        };
     }
 
     abstract handleRequest(
+        // eslint-disable-next-line no-unused-vars
         req : express.Request, res: express.Response, next: express.NextFunction
     ) : void | Promise<void>;
 

@@ -18,7 +18,7 @@ export class MetaLicensesEndpoint extends ApiEndpoint<{ error: false, frontend: 
     private frontendLicenseText: string;
     private backendLicenseText: string;
 
-    async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    async handleRequest(req: express.Request, res: express.Response): Promise<void> {
         let willSet = false;
         if (this.frontendLicenseText == null) {
             await generateLicenseFile(this.frontendPackagePath, this.frontendLicensesPath).then(() => {

@@ -15,7 +15,7 @@ export class BulletinParseEndpoint extends ApiEndpoint<BulletinParseEndpointResp
 
     private constructor() { super(); }
 
-    async handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    async handleRequest(req: express.Request, res: express.Response): Promise<void> {
         res.set("Content-Type", "application/json");
 
         if (req.params.bulletin != null) {
@@ -26,7 +26,7 @@ export class BulletinParseEndpoint extends ApiEndpoint<BulletinParseEndpointResp
             }
 
             if (!BulletinManager.i.has(bulletin)) {
-                this.sendError(res, "The bulletin has not yet been cached with GET bulletin/download.", 412)
+                this.sendError(res, "The bulletin has not yet been cached with GET bulletin/download.", 412);
                 return;
             }
 

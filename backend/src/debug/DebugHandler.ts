@@ -1,6 +1,6 @@
 import * as fs from "fs-jetpack";
 import {PagasaParserWeb} from "../PagasaParserWeb";
-import { createCipheriv, randomBytes, createDecipheriv } from "crypto";
+import {createCipheriv, createDecipheriv, randomBytes} from "crypto";
 import * as path from "path";
 import Logger from "bunyan";
 
@@ -15,7 +15,7 @@ export class DebugHandler {
 
     private key : Buffer;
 
-    private constructor() { }
+    private constructor() { /* private constructor */ }
 
     initialize(dataDirectory : string) {
         this.log = PagasaParserWeb.log;
