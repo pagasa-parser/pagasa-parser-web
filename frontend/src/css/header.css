@@ -26,6 +26,7 @@ header .nav > * {
     text-decoration: underline;
 }
 
+/* noinspection CssUnusedSymbol */
 .about-modal .modal-dialog {
     max-width: 800px;
 }

@@ -1,6 +1,6 @@
 export default class ApiError extends Error {
 
-    constructor(message, readonly details) {
+    constructor(message: string, readonly details: string) {
         super(message);
     }
 

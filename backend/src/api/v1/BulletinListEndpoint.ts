@@ -10,7 +10,7 @@ interface BulletinListEndpointResponse extends ApiEndpointResponse {
 export class BulletinListEndpoint extends ApiEndpoint<BulletinListEndpointResponse> {
 
     private static instance = new BulletinListEndpoint();
-    static get i() : BulletinListEndpoint { return this.instance; }
+    static get i(): BulletinListEndpoint { return this.instance; }
 
     private constructor() { super(); }
 

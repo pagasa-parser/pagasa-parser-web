@@ -25,9 +25,9 @@ export { ExpandedPAGASADocument } from "./cache/BulletinListCache";
 
 export class PagasaParserWeb {
 
-    static log : Logger;
-    static app : express.Application;
-    static server : net.Server;
+    static log: Logger;
+    static app: express.Application;
+    static server: net.Server;
 
     static readonly userAgent = `pagasa-parser-web/${
         packageInfo.version

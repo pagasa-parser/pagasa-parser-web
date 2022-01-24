@@ -9,15 +9,15 @@ export class DebugHandler {
     private static instance = new DebugHandler();
     static get i() { return this.instance; }
 
-    private log : Logger;
+    private log: Logger;
     private dataDirectory: string;
     private keyPath: string;
 
-    private key : Buffer;
+    private key: Buffer;
 
     private constructor() { /* private constructor */ }
 
-    initialize(dataDirectory : string) {
+    initialize(dataDirectory: string) {
         this.log = PagasaParserWeb.log;
         this.dataDirectory = dataDirectory;
         this.keyPath = path.join(this.dataDirectory, "debug.key");
@@ -41,7 +41,7 @@ export class DebugHandler {
         fs.write(this.keyPath, this.key.toString("base64"));
     }
 
-    encrypt(data: string) : string {
+    encrypt(data: string): string {
         const iv = randomBytes(16);
 
         const cipher = createCipheriv("aes-256-gcm", this.key, iv);
@@ -55,7 +55,7 @@ export class DebugHandler {
         }`;
     }
 
-    decrypt(data : string) : string {
+    decrypt(data: string): string {
         const [iv, digest, authTag] = data.split(":");
 
         if (iv == null || digest == null || authTag == null) {

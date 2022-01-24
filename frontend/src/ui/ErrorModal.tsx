@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, {Fragment} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Highlight from "./Highlight";
@@ -12,12 +12,12 @@ export interface ErrorModalState {
 
 export default class ErrorModal extends React.Component<{}, ErrorModalState> {
 
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = { open: false };
     }
 
-    open(error : Error) {
+    open(error: Error): void {
         if (error instanceof ApiError) {
             this.setState({
                 open: true,
@@ -33,13 +33,13 @@ export default class ErrorModal extends React.Component<{}, ErrorModalState> {
         }
     }
 
-    close() {
+    close(): void {
         this.setState({
             open: false
         });
     }
 
-    render() {
+    render(): JSX.Element {
         return <Modal show={this.state.open} onHide={() => this.close()}>
             <Modal.Header closeButton>
                 <Modal.Title>

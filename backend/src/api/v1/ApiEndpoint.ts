@@ -17,7 +17,7 @@ const errorHelp = "If this error persists, please file an issue at https://githu
 
 export abstract class ApiEndpoint<T> {
 
-    cacheData : T
+    cacheData: T
     cacheTime  = 0;
 
     /**
@@ -26,12 +26,12 @@ export abstract class ApiEndpoint<T> {
      *
      * @param endpoint The endpoint to transform
      */
-    static transform(endpoint: ApiEndpoint<any>) :
+    static transform(endpoint: ApiEndpoint<any>):
         // These are, in-fact, used by Express
         // eslint-disable-next-line no-unused-vars
-        (req : express.Request, res: express.Response, next: express.NextFunction) => void
+        (req: express.Request, res: express.Response, next: express.NextFunction) => void
     {
-        return async (req : express.Request, res: express.Response, next: express.NextFunction) => {
+        return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             try {
                 await endpoint.handleRequest.call(endpoint, req, res, next);
             } catch (e) {
@@ -43,14 +43,14 @@ export abstract class ApiEndpoint<T> {
 
     abstract handleRequest(
         // eslint-disable-next-line no-unused-vars
-        req : express.Request, res: express.Response, next: express.NextFunction
-    ) : void | Promise<void>;
+        req: express.Request, res: express.Response, next: express.NextFunction
+    ): void | Promise<void>;
 
-    send(res : express.Response, data : T) : void {
+    send(res: express.Response, data: T): void {
         res.send(data);
     }
 
-    sendError(res : express.Response, data : any, statusCode = 400) {
+    sendError(res: express.Response, data: any, statusCode = 400) {
         res.status(statusCode);
         res.set("Content-Type", "application/json");
         res.send({
@@ -64,7 +64,7 @@ export abstract class ApiEndpoint<T> {
         });
     }
 
-    setCache(data: T) : T {
+    setCache(data: T): T {
         PagasaParserWeb.log.debug("Cache set");
         this.cacheTime = Date.now();
         return (this.cacheData = data);
@@ -76,7 +76,7 @@ export abstract class ApiEndpoint<T> {
     setAndSendCache(res: express.Response, data: T) {
         res.send(this.setCache(data));
     }
-    getCacheAge() : number {
+    getCacheAge(): number {
         return Date.now() - this.cacheTime;
     }
 

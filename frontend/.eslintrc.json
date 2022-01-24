@@ -6,9 +6,6 @@
         "node": false,
         "browser": true
     },
-    "plugins": [
-        "jsdoc"
-    ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:import/errors",
@@ -25,6 +22,14 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/type-annotation-spacing": "warn",
+        "@typescript-eslint/ban-types": [
+            "error", {
+                "types": {
+                    "{}": false
+                }
+            }
+        ],
         "import/no-unresolved": "off",
         "semi": ["error", "always"],
         "camelcase": "warn",

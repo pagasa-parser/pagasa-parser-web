@@ -14,7 +14,7 @@ function BulletinInfoPanelBlank()  {
     </Fragment>;
 }
 
-function BulletinInfoPanelLoading({ name } : {name : string})  {
+function BulletinInfoPanelLoading({ name }: {name: string})  {
     return <Fragment>
         <h1>Loading bulletin...</h1>
         <p>Getting information on bulletin "{name}"...</p>
@@ -81,7 +81,7 @@ class BulletinInfoPanelRequest extends React.Component<{}, {
             .catch((e) => this.context.showError(e));
     }
 
-    render() {
+    render(): JSX.Element {
         return <Fragment>
             <h1>Bulletin not parsed</h1>
             <p>
@@ -134,7 +134,7 @@ class BulletinInfoPanelRequest extends React.Component<{}, {
                     </Fragment>}
                 </li>
             </ol>
-        </Fragment>
+        </Fragment>;
     }
 
 }
@@ -148,7 +148,7 @@ export default class BulletinInfoPanel extends React.Component {
         return this.context.state.activeBulletin;
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(): void {
         if (this.activeBulletin != null && this.activeBulletin.status == null) {
             ApiConnector.bulletinHas(this.activeBulletin.bulletin)
                 .then((has) => {
@@ -173,7 +173,7 @@ export default class BulletinInfoPanel extends React.Component {
         }
     }
 
-    render() {
+    render(): JSX.Element {
         const activeBulletin = this.activeBulletin;
 
         let panelInner;
@@ -189,14 +189,14 @@ export default class BulletinInfoPanel extends React.Component {
         ) {
             panelInner = <BulletinInfoPanelLoading name={activeBulletin.bulletin.file} />;
         } else if (!activeBulletin.status.downloaded || !activeBulletin.status.parsed) {
-            panelInner = <BulletinInfoPanelRequest />
+            panelInner = <BulletinInfoPanelRequest />;
         } else if (activeBulletin.data != null) {
             panelInner = <BulletinFormatterPanel />;
         } else {
             this.context.showError(new Error("Illegal state: panelInner failed all conditions."));
         }
 
-        return <div id={"bulletinInfoPanel"}>
+        return <div id="bulletinInfoPanel">
             {panelInner}
         </div>;
     }

@@ -5,14 +5,14 @@ interface LicensesDisplayState {
     backendLicenses?: string;
 }
 
-export default class LicensesDisplay extends React.Component<any, LicensesDisplayState> {
+export default class LicensesDisplay extends React.Component<{}, LicensesDisplayState> {
 
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = {};
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         fetch("/api/v1/meta/licenses")
             .then(d => d.json())
             .then(j => {

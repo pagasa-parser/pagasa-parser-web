@@ -13,9 +13,9 @@ interface BulletinFormatterPanelHeadProps {
 
 export class BulletinFormatterPanelHead extends React.Component<BulletinFormatterPanelHeadProps> {
 
-    selectedFormat : string;
+    selectedFormat: string;
 
-    render() {
+    render(): JSX.Element {
         return <div className={"formatterPanel-head"}>
             <FormSelect id={"formatterPanelFormat"} onChange={(event) => {
                 this.selectedFormat = event.target.value;
@@ -34,7 +34,7 @@ export class BulletinFormatterPanelHead extends React.Component<BulletinFormatte
             }} disabled={this.props.loading}>
                 Format
             </Button>
-        </div>
+        </div>;
     }
 
 }
@@ -48,7 +48,7 @@ export class BulletinFormatterDisplay extends React.Component<{ format: string }
         return this.context?.state?.activeBulletin?.formatted;
     }
 
-    render() {
+    render(): JSX.Element {
         const format = ApiConnector.formats[this.props.format];
 
         return <Fragment>
@@ -59,7 +59,7 @@ export class BulletinFormatterDisplay extends React.Component<{ format: string }
                         window.open(format.endpointLink.replace(
                             /\$1/g,
                             encodeURIComponent(this.context.state.activeBulletin.bulletin.file)
-                        ), "_blank")
+                        ), "_blank");
                     }}>
                         <Icon icon="link-45deg" />
                     </Button>
@@ -92,12 +92,12 @@ export default class BulletinFormatterPanel extends React.Component<{}, { format
         return this.context?.state?.activeBulletin;
     }
 
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = { format: "json", loading: false };
     }
 
-    render() {
+    render(): JSX.Element {
         return <Fragment>
             <BulletinFormatterPanelHead onFetch={async (f) => {
                 this.setState({

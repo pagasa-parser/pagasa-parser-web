@@ -4,26 +4,27 @@ import Tabs from "react-bootstrap/esm/Tabs";
 import Tab from "react-bootstrap/esm/Tab";
 import LicensesDisplay from "./LicensesDisplay";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageInfo = require("../../package.json");
 
 interface HeaderAboutState {
     aboutOpen: boolean;
 }
 
-export default class HeaderAbout extends React.Component<any, HeaderAboutState> {
+export default class HeaderAbout extends React.Component<{}, HeaderAboutState> {
 
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = {
             aboutOpen: false
         };
     }
 
-    showAbout() {
+    showAbout(): void {
         this.setState({ aboutOpen: true });
     }
 
-    hideAbout() {
+    hideAbout(): void {
         this.setState({ aboutOpen: false });
     }
 

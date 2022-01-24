@@ -12,12 +12,12 @@ export class BulletinManager {
     static get i() { return this.instance; }
 
     private dataDirectory: string;
-    private bulletinsDirectory : string;
-    private parsedDirectory : string;
+    private bulletinsDirectory: string;
+    private parsedDirectory: string;
 
     private constructor() { /* private constructor */ }
 
-    initialize(dataDirectory : string) {
+    initialize(dataDirectory: string) {
         this.dataDirectory = dataDirectory;
         this.bulletinsDirectory = path.join(this.dataDirectory, "bulletins");
         this.parsedDirectory = path.join(this.dataDirectory, "parsed");
@@ -30,35 +30,35 @@ export class BulletinManager {
         }
     }
 
-    getPDFPath(document :ExpandedPAGASADocument) : string {
+    getPDFPath(document: ExpandedPAGASADocument): string {
         return path.join(this.bulletinsDirectory, md5(document.file) + ".pdf");
     }
 
-    getJSONPath(document : ExpandedPAGASADocument) : string {
+    getJSONPath(document: ExpandedPAGASADocument): string {
         return path.join(this.parsedDirectory, md5(document.file) + ".json");
     }
 
-    has(document: ExpandedPAGASADocument) : boolean {
+    has(document: ExpandedPAGASADocument): boolean {
         return fs.exists(this.getPDFPath(document)) !== false;
     }
 
-    async get(document : ExpandedPAGASADocument) : Promise<string> {
+    async get(document: ExpandedPAGASADocument): Promise<string> {
         if (!fs.exists(this.getPDFPath(document))) {
             await this.download(document);
         }
         return this.getPDFPath(document);
     }
 
-    async download(document : ExpandedPAGASADocument) {
+    async download(document: ExpandedPAGASADocument) {
         const pdf = await axios(document.link, { responseType: "arraybuffer", timeout: 60000 });
         fs.write(this.getPDFPath(document), pdf.data);
     }
 
-    hasParsed(document : ExpandedPAGASADocument) : boolean {
+    hasParsed(document: ExpandedPAGASADocument): boolean {
         return fs.exists(this.getJSONPath(document)) !== false;
     }
 
-    async parse(document : ExpandedPAGASADocument) : Promise<Bulletin> {
+    async parse(document: ExpandedPAGASADocument): Promise<Bulletin> {
         if (this.hasParsed(document))
             return fs.read(this.getJSONPath(document), "jsonWithDates");
 

@@ -1,7 +1,7 @@
-import React from "react";
+import React, {Context} from "react";
 import Header from "./Header";
 import Body from "./Body";
-import { ActiveBulletin } from "../types/ActiveBulletin";
+import {ActiveBulletin} from "../types/ActiveBulletin";
 import {ExpandedPAGASADocument} from "../types/ExpandedPAGASADocument";
 import AppContext from "./AppContext";
 import ErrorModal from "./ErrorModal";
@@ -17,11 +17,11 @@ export interface AppState {
 export default class App extends React.Component<{}, AppState> {
 
     private static instance;
-    public static get i() { return this.instance; }
+    public static get i(): App { return this.instance; }
 
     private readonly errorModal: React.RefObject<ErrorModal>;
 
-    constructor(props, context) {
+    constructor(props: {}, context: Context<App>) {
         super(props, context);
         App.instance = this;
 
@@ -33,11 +33,11 @@ export default class App extends React.Component<{}, AppState> {
         this.errorModal = React.createRef();
     }
 
-    showError(error : Error) {
+    showError(error: Error): void {
         this.errorModal.current.open(error);
     }
 
-    render() {
+    render(): JSX.Element {
         return <AppContext.Provider value={this}>
             <ErrorModal ref={this.errorModal} />
             <Header />

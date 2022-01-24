@@ -5,11 +5,11 @@ export type ExpandedPAGASADocument = PAGASADocument & { link: string };
 
 export class BulletinListCache {
 
-    private static cache : ExpandedPAGASADocument[];
+    private static cache: ExpandedPAGASADocument[];
     private static lastCache = 0;
     private static cacheLength = 20000;
 
-    static async get() : Promise<ExpandedPAGASADocument[]> {
+    static async get(): Promise<ExpandedPAGASADocument[]> {
         if (this.getAge() > this.cacheLength) {
             try {
                 return (this.cache = (await PagasaScraper.listTCBs({
@@ -44,11 +44,11 @@ export class BulletinListCache {
         }
     }
 
-    static async getFromFilename(filename : string) : Promise<ExpandedPAGASADocument | null> {
+    static async getFromFilename(filename: string): Promise<ExpandedPAGASADocument | null> {
         return (this.cache ?? await this.get()).find(v => v.file === filename);
     }
 
-    static getAge() : number {
+    static getAge(): number {
         return Date.now() - this.lastCache;
     }
 

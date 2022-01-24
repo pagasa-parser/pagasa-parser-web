@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
-import { ExpandedPAGASADocument } from "../../types/ExpandedPAGASADocument";
+import {ExpandedPAGASADocument} from "../../types/ExpandedPAGASADocument";
 import AppContext from "../AppContext";
 
 import "../../css/sidebar.css";
@@ -14,7 +14,7 @@ export class FileList extends React.Component<{ bulletins: ExpandedPAGASADocumen
     static contextType = AppContext;
     declare context: React.ContextType<typeof AppContext>;
 
-    render() {
+    render(): JSX.Element {
         return <ListGroup>
             {
                 this.props.bulletins
@@ -45,7 +45,7 @@ export default class FileSidebar extends React.Component {
         return this.context.state.availableBulletins;
     }
 
-    reload() {
+    reload(): void {
         ApiConnector.bulletinList({
             headers: {
                 "Cache-Control": null
@@ -60,13 +60,13 @@ export default class FileSidebar extends React.Component {
             .catch(e => this.context.showError(e));
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         if (this.availableBulletins == null) {
             this.reload();
         }
     }
 
-    render() {
+    render(): JSX.Element {
         let note;
         if (this.context.state.bulletinListAge > 300000 && new Date().getUTCHours() % 3 == 0) {
             note = `The bulletin list was last cached ${Math.round(
