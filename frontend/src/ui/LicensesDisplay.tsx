@@ -13,14 +13,15 @@ export default class LicensesDisplay extends React.Component<{}, LicensesDisplay
     }
 
     componentDidMount(): void {
-        fetch("/api/v1/meta/licenses")
-            .then(d => d.json())
-            .then(j => {
-                this.setState({
-                    frontendLicenses: j["frontend"],
-                    backendLicenses: j["backend"]
+        if (!this.state.frontendLicenses || !this.state.backendLicenses)
+            fetch("/api/v1/meta/licenses")
+                .then(d => d.json())
+                .then(j => {
+                    this.setState({
+                        frontendLicenses: j["frontend"],
+                        backendLicenses: j["backend"]
+                    });
                 });
-            });
     }
 
     /**
