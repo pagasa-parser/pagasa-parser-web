@@ -2,7 +2,12 @@
     "name": "pagasa-parser-web",
     "version": "1.1.2",
     "description": "A web backend for the PAGASA parser, used for web-based and graphical data processing.",
+    "workspaces": [
+        "backend",
+        "frontend"
+    ],
     "scripts": {
+        "dev": "node scripts/dev.js",
         "build": "bash scripts/build.sh",
         "version": "node scripts/version-update.js",
         "postversion": "node scripts/version-add.js"

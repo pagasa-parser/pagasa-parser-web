@@ -19,9 +19,9 @@ The following environment variables are available for customization of the insta
 * `PPW_OWNER` – The owner of the instance. This is used in the user agent when making outbound requests.
 
 ## Development
-Before starting, install all dependencies on both `/frontend` and `/backend`. After installing dependencies, run the `dev` npm script of both repositories to start a development session. Port 12464 will be used for the web server (which will *not* run the web interface if not compiled) and port 12465 will be used for the Webpack Development Server. Since the Webpack Development Server is set up to automatically proxy all non-interface connections to port 12464, you only need to access port 12465 to begin working on both frontend and backend.
+Before starting, install all dependencies on both `/frontend` and `/backend`. After installing dependencies, run the `dev` npm script on the root repository to start a development session. Port 12464 will be used for the web server (which will *not* run the web interface if not compiled) and port 12465 will be used for the Webpack Development Server. Since the Webpack Development Server is set up to automatically proxy all non-interface connections to port 12464, you only need to access port 12465 to begin working on both frontend and backend.
 
-Frontend changes are applied immediately (instantaneously for CSS) by Webpack. Changes to the web server will require a restart of the backend `dev` script.
+Frontend changes are applied immediately (instantaneously for CSS) by Webpack. Changes to the web server will restart the web server.
 
 If at any point you wish to delete build artifacts, use the `clean` script.
 
