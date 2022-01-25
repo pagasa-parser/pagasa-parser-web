@@ -10,7 +10,8 @@
         "dev": "node scripts/dev.js",
         "build": "bash scripts/build.sh",
         "version": "node scripts/version-update.js",
-        "postversion": "node scripts/version-add.js"
+        "postversion": "node scripts/version-add.js",
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",
@@ -30,5 +31,8 @@
     "bugs": {
         "url": "https://github.com/pagasa-parser/pagasa-parser-web/issues"
     },
-    "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme"
+    "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme",
+    "devDependencies": {
+        "husky": "^7.0.4"
+    }
 }

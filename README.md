@@ -10,7 +10,7 @@ Running PAGASA Parser standalone requires Java to run the PDF parser in [@pagasa
 
 ## Docker
 The Docker container contains everything needed to run PAGASA Parser and also exposes the web server at port 80. To get started easily, run the following command in your preferred shell. This will run the PAGASA Parser on port 12464.
-```sh
+```shell
 docker run -d --name pagasa-parser-web -p 12464:80 chlod/pagasa-parser-web:latest
 ```
 
@@ -19,7 +19,11 @@ The following environment variables are available for customization of the insta
 * `PPW_OWNER` – The owner of the instance. This is used in the user agent when making outbound requests.
 
 ## Development
-Before starting, install all dependencies on both `/frontend` and `/backend`. After installing dependencies, run the `dev` npm script on the root repository to start a development session. Port 12464 will be used for the web server (which will *not* run the web interface if not compiled) and port 12465 will be used for the Webpack Development Server. Since the Webpack Development Server is set up to automatically proxy all non-interface connections to port 12464, you only need to access port 12465 to begin working on both frontend and backend.
+Before starting, install all dependencies on the root project, `/frontend`, and `/backend`. 
+```shell
+npm install # This install dependencies on all three.
+```
+After installing dependencies, run the `dev` npm script on the root repository to start a development session. Port 12464 will be used for the web server (which will *not* run the web interface if not compiled) and port 12465 will be used for the Webpack Development Server. Since the Webpack Development Server is set up to automatically proxy all non-interface connections to port 12464, you only need to access port 12465 to begin working on both frontend and backend.
 
 Frontend changes are applied immediately (instantaneously for CSS) by Webpack. Changes to the web server will restart the web server.
 
