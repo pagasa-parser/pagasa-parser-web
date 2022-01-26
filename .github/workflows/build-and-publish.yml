@@ -114,7 +114,6 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   context: .
-                  load: true
                   # Note: tags has to be all lower-case
                   tags: |
                       chlod/pagasa-parser-web:latest 
