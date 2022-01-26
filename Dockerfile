@@ -9,16 +9,15 @@ RUN npm config set update-notifier false
 # ====================================
 # Install dependencies
 # ====================================
-WORKDIR /usr/src/app/backend
+WORKDIR /usr/src/app
 
-COPY backend/package*.json ./
-RUN npm ci
-
+COPY package*.json .
+COPY backend/package*.json backend/
+COPY frontend/package*.json frontend/
+RUN npm -d ci
 WORKDIR /usr/src/app/frontend
-
-COPY frontend/package*.json ./
-RUN npm ci
-RUN npm install ../backend
+RUN npm -d ci ../backend
+WORKDIR /usr/src/app
 
 # ====================================
 # Copy and build
@@ -28,34 +27,30 @@ ENV NODE_ENV=production
 ENV HEADLESS=true
 
 # Backend must go first
-WORKDIR /usr/src/app/backend
-COPY backend/ .
-RUN npm run build
+COPY backend backend
+RUN npm run --workspace=backend build
 
-WORKDIR /usr/src/app/frontend
-COPY frontend/ .
-RUN npm run build
+COPY frontend frontend
+RUN npm run --workspace=frontend build
 
 # ====================================
 # Cleanup
 # ====================================
 
-WORKDIR /usr/src/app/backend
-RUN npm prune --production
+# Move built JS to static app
+RUN mv frontend/build/* backend/static/app/js/
+RUN npm -d prune --production --workspace=backend
+RUN rm -rf backend/src
 
-WORKDIR /usr/src/app/frontend
-RUN npm prune --production
+# Delete frontend source - all compiled into static folder.
+RUN rm -rf frontend
 
 # ====================================
 # Start
 # ====================================
 
-WORKDIR /usr/src/app/backend
-
-# Symlink static to frontend build path
-RUN ln -sf ../../../frontend/build static/app/js
-
 ENV PORT 80
 EXPOSE 80
 
+WORKDIR /usr/src/app/backend
 CMD [ "node", "build/PagasaParserWeb.js" ]

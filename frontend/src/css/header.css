@@ -30,3 +30,18 @@ header .nav > * {
 .about-modal .modal-dialog {
     max-width: 800px;
 }
+
+/* noinspection CssUnusedSymbol */
+.about-modal .nav {
+    margin-bottom: 8px;
+}
+
+.about-modal #licenses pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.about-modal #licenses li > ul {
+    column-count: 3;
+}

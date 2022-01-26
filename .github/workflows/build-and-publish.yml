@@ -9,8 +9,8 @@ on:
     pull_request:
 
 jobs:
-    build-and-push:
-        name: Build Docker image and push to Docker Hub
+    build:
+        name: Build Docker image
         runs-on: ubuntu-latest
 
         steps:
@@ -19,10 +19,84 @@ jobs:
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v1
+              
             - name: Set up Docker Buildx
               id: buildx
               uses: docker/setup-buildx-action@v1
 
+            - name: Read version
+              id: version
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: .
+
+            - name: Build image
+              id: docker_build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  tags: |
+                      chlod/pagasa-parser-web:latest
+                      chlod/pagasa-parser-web:${{ steps.version.outputs.current-version }}
+                  outputs: type=docker,dest=/tmp/pagasa-parser-web.image.tar
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
+
+            - name: Image digest
+              run: echo ${{ steps.docker_build.outputs.digest }}
+                  
+            - name: Upload Docker image to artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                name: image
+                path: /tmp/pagasa-parser-web.image.tar
+    analysis:
+        name: Analyze image
+        runs: ubuntu-latest
+        depends-on: build
+        
+        steps:
+            - name: Download Docker image to artifacts
+              uses: actions/download-artifact@v2
+              with:
+                name: image
+                path: /tmp
+                
+            - name: Load image
+              run: |
+                  docker load --input /tmp/pagasa-parser-web.image.tar
+                  docker image ls -a
+                  
+            - name: Dive
+              uses: yuichielectric/dive-action@0.0.4
+              with:
+                  image: "chlod/pagasa-parser-web:latest"
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+    push:
+        name: Push to Docker hub
+        runs: ubuntu-latest
+        depends-on: analysis
+        # Only push when tagged
+        if: github.ref_type == 'tag' || (
+            github.event.pusher.name == 'ChlodAlejandro'
+            && startsWith(github.event.head_commit.message, '[rw]') # rewrite
+        )
+        
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              
+            - name: Download Docker image to artifacts
+              uses: actions/download-artifact@v2
+              with:
+                name: image
+                path: /tmp
+                
+            - name: Load image
+              run: |
+                  docker load --input /tmp/pagasa-parser-web.image.tar
+                  docker image ls -a
+                  
             - name: Login to DockerHub
               uses: docker/login-action@v1
               with:
@@ -35,21 +109,16 @@ jobs:
               with:
                   path: .
 
-            - name: Build image and push to Docker Hub
+            - name: Push image
               id: docker_build
               uses: docker/build-push-action@v2
               with:
                   context: .
+                  load: true
                   # Note: tags has to be all lower-case
                   tags: |
                       chlod/pagasa-parser-web:latest 
                       chlod/pagasa-parser-web:${{ steps.version.outputs.current-version }}
-                  # Only push when tagged
-                  push:
-                      ${{ github.ref_type == 'tag' || (
-                          github.event.pusher.name == 'ChlodAlejandro'
-                          && startsWith(github.event.head_commit.message, '[overwrite]')
-                      ) }}
-
-            - name: Image digest
-              run: echo ${{ steps.docker_build.outputs.digest }}
+                  push: true
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max

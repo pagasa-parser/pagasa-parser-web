@@ -1,4 +1,31 @@
-node_modules
-build
-npm-debug.log
+# Ignore CI
+**/.github
+
+# Ignore IDEs
+**/.idea
+**/.vscode
+
+# Ignore git
+**/.git
+
+# Ignore dependencies (rebuilt in container)
+**/node_modules
+
+# Ignore built files
+**/build
+
+# Ignore generated files
 backend/data
+npm-debug.log
+
+# Ignore development configurations
+.husky
+**/.eslintrc.json
+**/.gitignore
+**/jest.config.js
+
+# Ignore tests
+**/tests
+
+# Ignore scripts
+scripts

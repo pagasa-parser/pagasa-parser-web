@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const webpack = require("webpack");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const LicensePlugin = require("webpack-license-plugin");
 
 /** @type {any[]} */
 const plugins = [
-    new webpack.ids.HashedModuleIdsPlugin()
+    new webpack.ids.HashedModuleIdsPlugin(),
+    new LicensePlugin({
+        outputFilename: "licenses.json"
+    })
 ];
 
 if (process.env.HEADLESS !== "true") {
