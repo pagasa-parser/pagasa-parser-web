@@ -38,6 +38,7 @@ RUN npm run --workspace=frontend build
 # ====================================
 
 # Move built JS to static app
+RUN mkdir -p backend/static/app/js/
 RUN mv frontend/build/* backend/static/app/js/
 RUN npm -d prune --production --workspace=backend
 RUN rm -rf backend/src
