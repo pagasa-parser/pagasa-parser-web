@@ -79,8 +79,8 @@ jobs:
         # Only push when tagged
         if: github.ref_type == 'tag' || (
             github.event.pusher.name == 'ChlodAlejandro'
-            && startsWith(github.event.head_commit.message, '[rw]') # rewrite
-        )
+            && startsWith(github.event.head_commit.message, '[rw]')
+        ) # rewrite
         
         steps:
             - name: Checkout code
