@@ -118,3 +118,4 @@ jobs:
                       chlod/pagasa-parser-web:latest 
                       chlod/pagasa-parser-web:${{ steps.version.outputs.current-version }}
                   push: true
+                  cache-from: type=gha
