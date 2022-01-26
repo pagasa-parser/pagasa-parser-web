@@ -52,8 +52,8 @@ jobs:
                 path: /tmp/pagasa-parser-web.image.tar
     analysis:
         name: Analyze image
-        runs: ubuntu-latest
-        depends-on: build
+        runs-on: ubuntu-latest
+        needs: build
         
         steps:
             - name: Download Docker image to artifacts
@@ -74,13 +74,13 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
     push:
         name: Push to Docker hub
-        runs: ubuntu-latest
-        depends-on: analysis
+        runs-on: ubuntu-latest
+        needs: analysis
         # Only push when tagged
         if: github.ref_type == 'tag' || (
             github.event.pusher.name == 'ChlodAlejandro'
-            && startsWith(github.event.head_commit.message, '[rw]')
-        ) # rewrite
+            && startsWith(github.event.head_commit.message, '[rw]'))
+         # rewrite
         
         steps:
             - name: Checkout code
