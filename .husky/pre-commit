@@ -2,5 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo "[i] Performing ESLint fixes..."
-eslint -c backend/.eslintrc.json --fix backend/src
-eslint -c frontend/.eslintrc.json --fix frontend/src
+eslint -c backend/.eslintrc.json --fix --cache backend/src
+eslint -c frontend/.eslintrc.json --fix --cache frontend/src
