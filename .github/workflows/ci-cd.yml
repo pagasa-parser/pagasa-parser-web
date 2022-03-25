@@ -25,14 +25,6 @@ jobs:
             - name: Perform audit (backend)
               uses: oke-py/npm-audit-action@v1.8.3
               with:
-                  working_directory: backend
-                  audit_level: moderate
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Perform audit (frontend)
-              uses: oke-py/npm-audit-action@v1.8.3
-              with:
-                  working_directory: frontend
                   audit_level: moderate
                   github_token: ${{ secrets.GITHUB_TOKEN }}
     build:
