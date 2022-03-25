@@ -32,8 +32,10 @@
         "url": "https://github.com/pagasa-parser/pagasa-parser-web/issues"
     },
     "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme",
-    "devDependencies": {
-        "cross-env": "^7.0.3",
+    "dependencies": {
         "husky": "^7.0.4"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3"
     }
 }

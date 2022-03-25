@@ -3,6 +3,7 @@
 # ====================================================
 
 FROM node:16-alpine AS BUILD_IMAGE
+ENV NODE_ENV=development
 
 # Disable npm update message
 RUN npm config set update-notifier false
@@ -15,7 +16,7 @@ WORKDIR /build
 COPY package*.json .
 COPY backend/package*.json backend/
 COPY frontend/package*.json frontend/
-RUN npm -d ci && cd /build/frontend && npm -d ci ../backend
+RUN npm -d ci
 
 # ====================================
 # Copy and build
@@ -53,8 +54,13 @@ RUN apk update \
 
 WORKDIR /app
 
-# Copy dependencies
-COPY --from=BUILD_IMAGE /build/node_modules /app/node_modules
+# Copy package(-lock).json files
+COPY package*.json .
+COPY backend/package*.json backend/
+COPY frontend/package*.json frontend/
+
+# Install dependencies
+RUN npm -d ci
 
 # Move built JS to static app
 COPY --from=BUILD_IMAGE /build/backend /app
