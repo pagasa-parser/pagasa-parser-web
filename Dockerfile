@@ -36,6 +36,11 @@ RUN mkdir -p backend/static/app/js/ && mv frontend/build/* backend/static/app/js
 # Cleanup
 RUN rm -rf /build/backend/src
 
+# ====================================
+# Prune non-production dependencies
+# ====================================
+RUN npm prune --workspaces --production
+
 # ====================================================
 #                       APP IMAGE
 # ====================================================
@@ -54,16 +59,11 @@ RUN apk update \
 
 WORKDIR /app
 
-# Copy package(-lock).json files
-COPY package*.json .
-COPY backend/package*.json backend/
-COPY frontend/package*.json frontend/
-
-# Install dependencies
-RUN npm -d ci
-
 # Move built JS to static app
 COPY --from=BUILD_IMAGE /build/backend /app
+
+# Copy dependencies
+COPY --from=BUILD_IMAGE /build/node_modules /app/node_modules
 
 # ====================================
 # Start
