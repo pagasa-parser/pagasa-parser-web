@@ -50,7 +50,10 @@ export class BulletinManager {
     }
 
     async download(document: ExpandedPAGASADocument) {
-        const pdf = await axios(document.link, { responseType: "arraybuffer", timeout: 60000 });
+        const pdf = await axios(document.link, {
+            responseType: "arraybuffer",
+            timeout: 60000
+        });
         fs.write(this.getPDFPath(document), pdf.data);
     }
 

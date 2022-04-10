@@ -5,19 +5,54 @@ import {ExpandedPAGASADocument} from "../types/ExpandedPAGASADocument";
 import ApiError from "./ApiError";
 import isBulletin from "../util/isBulletin";
 
-export interface Formatter {
+/**
+ * The ResourceFormatter takes in a PAGASA bulletin and churns out resource data. Resource
+ * data includes signal images and raw bulletin PDFs.
+ */
+export interface ResourceFormatter {
+    name: string;
+    endpoint: (data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit) =>
+        Promise<Blob>;
+    endpointLink: string;
+    postLoad?: (iframeDoc: Document) => void;
+}
+
+/**
+ * The DataFormatter takes in a PAGASA bulletin and churns out textual data. Textual
+ * data includes parsed JSON.
+ */
+export interface DataFormatter {
     name: string;
     endpoint: (data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit) => Promise<string>;
     endpointLink: string;
     language?: string;
 }
 
+export type Formatter = ResourceFormatter | DataFormatter;
+
 export class ApiConnector {
 
     static readonly formats: Record<string, Formatter> = {
+        "pdf": {
+            name: "Original PDF",
+            endpoint: async (data): Promise<Blob> => {
+                if (typeof data === "string" || isBulletin(data))
+                    return new Blob([
+                        `<!DOCTYPE html>
+                        <html>
+                            <body>
+                                <h1>No PDF is available for uploaded bulletins.</h1>
+                            </body>
+                        </html>`,
+                    ]);
+                else
+                    return await ApiConnector.bulletinGet(data);
+            },
+            endpointLink: "/api/v1/bulletin/get/$1"
+        },
         "json": {
             name: "JSON",
-            endpoint: async (data) => {
+            endpoint: async (data): Promise<string> => {
                 if (typeof data === "string")
                     return data;
                 else if (isBulletin(data))
@@ -27,6 +62,18 @@ export class ApiConnector {
             },
             endpointLink: "/api/v1/bulletin/parse/$1",
             language: "json"
+        },
+        "signals": {
+            name: "Storm signals image (SVG)",
+            endpoint: ApiConnector.formatSignals,
+            endpointLink: "/api/v1/format/signals/$1",
+            postLoad(iframeDoc) {
+                iframeDoc.documentElement.style.left = "0";
+                iframeDoc.documentElement.style.top = "0";
+                iframeDoc.documentElement.style.position = "absolute";
+                iframeDoc.documentElement.style.width = "100%";
+                iframeDoc.documentElement.style.height = "100%";
+            }
         },
         "wikipedia": {
             name: "Wikipedia (Template:TyphoonWarningsTable)",
@@ -63,6 +110,11 @@ export class ApiConnector {
             .then((j: ApiResponse<{ downloaded: boolean }>) => this.throwIfError(j));
     }
 
+    static async bulletinGet(bulletin: ExpandedPAGASADocument, options?: RequestInit): Promise<Blob> {
+        return fetch(`/api/v1/bulletin/get/${encodeURIComponent(bulletin.file)}`, options)
+            .then(d => d.blob());
+    }
+
     static async bulletinParse(bulletin: ExpandedPAGASADocument, options?: RequestInit): Promise<Bulletin> {
         return fetch(`/api/v1/bulletin/parse/${encodeURIComponent(bulletin.file)}`, options)
             .then(d => d.text())
@@ -71,8 +123,33 @@ export class ApiConnector {
             .then((r) => r.bulletin);
     }
 
-    static async formatWikipedia(data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit): Promise<string> {
-        let fetchPromise;
+    static async formatSignals(
+        data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit
+    ): Promise<Blob> {
+        let fetchPromise: Promise<Response>;
+
+        if (typeof data === "string" || isBulletin(data)) {
+            const formData = new FormData();
+            const jsonBlob = new Blob([
+                typeof data === "string" ? data : JSON.stringify(data)
+            ]);
+            formData.append("json", jsonBlob, "bulletin.json");
+
+            fetchPromise = fetch("/api/v1/format/signals", Object.assign(options, {
+                method: "POST",
+                body: formData
+            }));
+        } else {
+            fetchPromise = fetch(`/api/v1/format/signals/${encodeURIComponent(data.file)}`, options);
+        }
+
+        return fetchPromise.then(d => d.blob());
+    }
+
+    static async formatWikipedia(
+        data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit
+    ): Promise<string> {
+        let fetchPromise: Promise<Response>;
 
         if (typeof data === "string" || isBulletin(data)) {
             const formData = new FormData();

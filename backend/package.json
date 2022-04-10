@@ -19,6 +19,7 @@
         "pagasa-parser": "^2.0.10"
     },
     "devDependencies": {
+        "@pagasa-parser/formatter-signals": "^0.1.0",
         "@types/bunyan": "^1.8.8",
         "@types/bunyan-format": "^0.2.4",
         "@types/express": "^4.17.13",
@@ -32,7 +33,7 @@
         "rimraf": "^3.0.2",
         "ts-jest": "^27.0.5",
         "ts-node": "^10.2.1",
-        "typescript": "^4.4.2"
+        "typescript": "^4.6.3"
     },
     "watch": {
         "dev:run": {

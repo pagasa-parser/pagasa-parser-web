@@ -59,7 +59,12 @@ class BulletinInfoPanelRequest extends React.Component<{}, {
                     downloading: false
                 });
             })
-            .catch((e) => this.context.showError(e));
+            .catch((e) => this.context.showError(e))
+            .finally(() => {
+                this.setState({
+                    downloading: false
+                });
+            });
     }
 
     parseBulletin() {
@@ -78,7 +83,12 @@ class BulletinInfoPanelRequest extends React.Component<{}, {
                     activeBulletin: this.activeBulletin
                 });
             })
-            .catch((e) => this.context.showError(e));
+            .catch((e) => this.context.showError(e))
+            .finally(() => {
+                this.setState({
+                    parsing: false
+                });
+            });
     }
 
     render(): JSX.Element {

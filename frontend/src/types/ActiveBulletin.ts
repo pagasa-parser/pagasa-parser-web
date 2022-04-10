@@ -7,6 +7,9 @@ export interface ActiveBulletin {
     bulletin: ExpandedPAGASADocument;
     status?: { downloaded: boolean, parsed: boolean };
     data?: Bulletin;
-    formatted?: Record<keyof typeof ApiConnector.formats, string>;
+    formatted?: Record<
+        keyof typeof ApiConnector.formats,
+        Awaited<ReturnType<(typeof ApiConnector.formats)[keyof typeof ApiConnector]["endpoint"]>>
+    >;
 
 }

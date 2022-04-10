@@ -17,6 +17,8 @@ import {BulletinParseEndpoint} from "./api/v1/BulletinParseEndpoint";
 import {BulletinHasEndpoint} from "./api/v1/BulletinHasEndpoint";
 import {FormatWikipediaEndpoint} from "./api/v1/FormatWikipediaEndpoint";
 import {MetaLicensesEndpoint} from "./api/v1/MetaLicensesEndpoint";
+import {BulletinGetEndpoint} from "./api/v1/BulletinGetEndpoint";
+import {FormatSignalsEndpoint} from "./api/v1/FormatSignalsEndpoint";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageInfo = require("../package.json");
@@ -90,7 +92,9 @@ export class PagasaParserWeb {
         this.app.get("/api/v1/bulletin/download/:bulletin", ApiEndpoint.transform(BulletinDownloadEndpoint.i));
         this.app.get("/api/v1/bulletin/parse/:bulletin", ApiEndpoint.transform(BulletinParseEndpoint.i));
         this.app.get("/api/v1/bulletin/has/:bulletin", ApiEndpoint.transform(BulletinHasEndpoint.i));
+        this.app.get("/api/v1/bulletin/get/:bulletin", ApiEndpoint.transform(BulletinGetEndpoint.i));
         this.app.get("/api/v1/format/json/:bulletin", ApiEndpoint.transform(BulletinParseEndpoint.i));
+        this.app.get("/api/v1/format/signals/:bulletin", ApiEndpoint.transform(FormatSignalsEndpoint.i));
         this.app.get("/api/v1/format/wikipedia/:bulletin", ApiEndpoint.transform(FormatWikipediaEndpoint.i));
 
         this.app.post(

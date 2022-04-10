@@ -19,8 +19,6 @@ export default class Highlight extends React.Component<HighlightProps> {
     id: string;
 
     constructor(props: HighlightProps, context: Context<App>) {
-        if (props.language == null)
-            props.language = "plaintext";
         super(props, context);
         this.id = randomString();
     }
