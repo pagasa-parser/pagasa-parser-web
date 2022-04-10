@@ -59,3 +59,8 @@ main {
     margin-left: 8px;
 }
 
+#bulletinInfoPanel > .react-transform-wrapper,
+#bulletinInfoPanel > .react-transform-wrapper > .react-transform-component {
+    height: 100%;
+    width: 100%;
+}

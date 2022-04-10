@@ -96,15 +96,15 @@ export class BulletinFormatterDisplay extends React.Component<{ format: string }
         const formattedResource = this.activeBulletinFormatted[this.props.format];
 
         if (formattedResource instanceof Blob) {
-            return <iframe
-                className={"full"}
-                src={URL.createObjectURL(formattedResource)}
-                onLoad={(event) => {
-                    const frameElement = event.currentTarget;
-                    if ((format as ResourceFormatter).postLoad)
-                        (format as ResourceFormatter).postLoad(frameElement.contentDocument);
-                }}
-            />;
+            const builder = (ApiConnector.formats[this.props.format] as ResourceFormatter).builder;
+            if (builder) {
+                return builder(formattedResource);
+            } else {
+                return <iframe
+                    className={"full"}
+                    src={URL.createObjectURL(formattedResource)}
+                />;
+            }
         } else {
             return <Highlight language={(format as DataFormatter).language}>
                 {this.activeBulletinFormatted[this.props.format]}

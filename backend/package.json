@@ -5,7 +5,7 @@
     "description": "Backend server for a web interface of the PAGASA parser.",
     "main": "build/PagasaParserWeb.js",
     "dependencies": {
-        "@pagasa-parser/formatter-signals": "^0.1.0",
+        "@pagasa-parser/formatter-signals": "^0.1.2",
         "@pagasa-parser/formatter-wikipedia": "^1.0.9",
         "@pagasa-parser/source-pdf": "^1.1.3",
         "axios": "^0.24.0",

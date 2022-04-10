@@ -4,6 +4,8 @@ import {ApiResponse} from "../types/APIResponse";
 import {ExpandedPAGASADocument} from "../types/ExpandedPAGASADocument";
 import ApiError from "./ApiError";
 import isBulletin from "../util/isBulletin";
+import ImageDisplay from "../ui/displays/ImageDisplay";
+import React from "react";
 
 /**
  * The ResourceFormatter takes in a PAGASA bulletin and churns out resource data. Resource
@@ -14,7 +16,7 @@ export interface ResourceFormatter {
     endpoint: (data?: string | Bulletin | ExpandedPAGASADocument, options?: RequestInit) =>
         Promise<Blob>;
     endpointLink: string;
-    postLoad?: (iframeDoc: Document) => void;
+    builder?: (formatted: Blob) => JSX.Element;
 }
 
 /**
@@ -64,16 +66,10 @@ export class ApiConnector {
             language: "json"
         },
         "signals": {
-            name: "Storm signals image (SVG)",
+            name: "[EXPERIMENTAL] Storm signal map (SVG)",
             endpoint: ApiConnector.formatSignals,
             endpointLink: "/api/v1/format/signals/$1",
-            postLoad(iframeDoc) {
-                iframeDoc.documentElement.style.left = "0";
-                iframeDoc.documentElement.style.top = "0";
-                iframeDoc.documentElement.style.position = "absolute";
-                iframeDoc.documentElement.style.width = "100%";
-                iframeDoc.documentElement.style.height = "100%";
-            }
+            builder: (data) => React.createElement(ImageDisplay, { data })
         },
         "wikipedia": {
             name: "Wikipedia (Template:TyphoonWarningsTable)",
