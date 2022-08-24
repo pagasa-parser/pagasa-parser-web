@@ -9,8 +9,8 @@ export default class ImageDisplay extends React.Component<{ data: Blob }, any> {
      * @returns The rendered element.
      */
     render(): JSX.Element {
-        return <TransformWrapper className={"full"}>
-            <TransformComponent className={"full"}>
+        return <TransformWrapper>
+            <TransformComponent>
                 <div
                     className={"full"}
                     style={{
