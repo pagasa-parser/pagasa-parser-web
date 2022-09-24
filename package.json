@@ -33,6 +33,7 @@
     },
     "homepage": "https://github.com/pagasa-parser/pagasa-parser-web#readme",
     "dependencies": {
+        "@pagasa-parser/source-pdf": "^1.1.5",
         "husky": "^7.0.4"
     },
     "devDependencies": {
