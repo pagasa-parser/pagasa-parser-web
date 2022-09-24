@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "pagasa-parser-web-backend",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Backend server for a web interface of the PAGASA parser.",
     "main": "build/PagasaParserWeb.js",
     "dependencies": {
