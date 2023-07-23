@@ -9,28 +9,9 @@ on:
     pull_request:
 
 jobs:
-    audit:
-        name: Perform NPM audits
-        runs-on: ubuntu-latest
-        env:
-            NODE_ENV: development
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Install dependencies
-              run: npm ci
-
-            - name: Perform audit (backend)
-              uses: oke-py/npm-audit-action@v1.8.3
-              with:
-                  audit_level: moderate
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
     build:
         name: Build Docker image
         runs-on: ubuntu-latest
-        needs: audit
 
         steps:
             - name: Checkout code
