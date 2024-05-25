@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "pagasa-parser-web",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "A web backend for the PAGASA parser, used for web-based and graphical data processing.",
     "workspaces": [
         "backend",
