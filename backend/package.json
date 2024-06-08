@@ -8,7 +8,7 @@
         "@pagasa-parser/formatter-signals": "^0.1.2",
         "@pagasa-parser/formatter-wikipedia": "^1.1.0",
         "@pagasa-parser/source-pdf": "^1.1.9",
-        "axios": "^0.24.0",
+        "axios": "^0.28.0",
         "body-parser": "^1.19.1",
         "bunyan": "^1.8.15",
         "bunyan-format": "^0.2.1",
