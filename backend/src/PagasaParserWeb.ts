@@ -19,6 +19,7 @@ import {FormatWikipediaEndpoint} from "./api/v1/FormatWikipediaEndpoint";
 import {MetaLicensesEndpoint} from "./api/v1/MetaLicensesEndpoint";
 import {BulletinGetEndpoint} from "./api/v1/BulletinGetEndpoint";
 import {FormatSignalsEndpoint} from "./api/v1/FormatSignalsEndpoint";
+import {stringReplace} from "string-replace-middleware";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageInfo = require("../package.json");
@@ -76,6 +77,28 @@ export class PagasaParserWeb {
             res.set("Server", `pagasa-parser-web/${packageInfo.version}`);
             next();
         });
+
+        // Middleware for Google Analytics
+        if ( process.env.PPW_GA4_GTAG ) {
+            if ( !/^G-[A-Z0-9]+/.test(process.env.PPW_GA4_GTAG) ) {
+                this.log.warn("Google Analytics GA4 measurement ID is not valid.");
+            } else {
+                this.app.use( stringReplace( {
+                    "<!-- PPW_DYNAMIC -->": (req) => {
+                        const dnt = req.header("dnt");
+                        if (dnt != null && dnt !== "0") {
+                            return "";
+                        }
+
+                        return `<script async src="https://www.googletagmanager.com/gtag/js?id=${
+                            process.env.PPW_GA4_GTAG
+                        }"></script><script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${
+                            process.env.PPW_GA4_GTAG
+                        }');</script>`;
+                    }
+                } ) );
+            }
+        }
 
         // Static
         this.app.use("/", express.static(path.join(__dirname, "..", "static")));
